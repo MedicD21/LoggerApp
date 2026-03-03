@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "name": "Egg",
+      "category": "generic",
+      "estimated_portion": {
+        "amount": 2,
+        "unit": "piece"
+      },
+      "confidence": 0.94,
+      "notes": "Assumed large eggs"
+    },
+    {
+      "name": "Whole Wheat Bread",
+      "category": "generic",
+      "estimated_portion": {
+        "amount": 2,
+        "unit": "piece"
+      },
+      "confidence": 0.72,
+      "notes": "Toast slices"
+    }
+  ],
+  "assumptions": [
+    "Butter was not visible clearly and was excluded."
+  ],
+  "needs_user_confirmation": false
+}

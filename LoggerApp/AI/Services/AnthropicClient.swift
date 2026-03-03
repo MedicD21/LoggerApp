@@ -1,10 +1,10 @@
 import Foundation
 import OSLog
 
-struct AnthropicClient {
+struct AnthropicClient: Sendable {
     private enum Constants {
-        // Snapshot model selected from Anthropic's current official model list for production stability.
-        static let model = "claude-opus-4-1-20250805"
+        // Model identifier verified against Anthropic's current official model list.
+        static let model = "claude-opus-4-6"
         static let version = "2023-06-01"
         static let endpoint = "https://api.anthropic.com/v1/messages"
         static let apiKeyKeychainKey = "anthropic_api_key"
@@ -147,4 +147,3 @@ private struct AnthropicMessageResponse: Decodable {
 
     let content: [ContentBlock]
 }
-

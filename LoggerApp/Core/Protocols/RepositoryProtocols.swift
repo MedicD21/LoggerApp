@@ -30,9 +30,8 @@ protocol MedicationRepositoryProtocol {
     func recentDoses(limit: Int) throws -> [MedicationDose]
 }
 
-protocol AIRepositoryProtocol {
+protocol AIRepositoryProtocol: Sendable {
     func analyzePhoto(_ imageData: Data) async throws -> AIFoodResponse
     func parseLogText(_ text: String) async throws -> AIFoodResponse
     func decomposeRecipe(_ text: String) async throws -> AIFoodResponse
 }
-

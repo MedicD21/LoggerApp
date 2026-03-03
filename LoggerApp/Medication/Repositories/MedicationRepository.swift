@@ -31,7 +31,10 @@ final class MedicationRepository: MedicationRepositoryProtocol {
         }
 
         try modelContext.save()
-        Task { await notificationManager.scheduleMedicationNotifications(for: schedule) }
+        let snapshot = MedicationReminderSnapshot(schedule: schedule)
+        Task { @MainActor in
+            await notificationManager.scheduleMedicationNotifications(for: snapshot)
+        }
     }
 
     func logDose(site: String, sideEffects: String?) throws {
@@ -43,7 +46,10 @@ final class MedicationRepository: MedicationRepositoryProtocol {
         schedule.remainingDoses = max(schedule.remainingDoses - 1, 0)
         modelContext.insert(dose)
         try modelContext.save()
-        Task { await notificationManager.scheduleMedicationNotifications(for: schedule) }
+        let snapshot = MedicationReminderSnapshot(schedule: schedule)
+        Task { @MainActor in
+            await notificationManager.scheduleMedicationNotifications(for: snapshot)
+        }
     }
 
     func recentDoses(limit: Int = 8) throws -> [MedicationDose] {
@@ -54,4 +60,3 @@ final class MedicationRepository: MedicationRepositoryProtocol {
         return try modelContext.fetch(descriptor)
     }
 }
-

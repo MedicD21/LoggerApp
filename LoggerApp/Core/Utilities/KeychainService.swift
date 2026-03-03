@@ -1,7 +1,7 @@
 import Foundation
 import Security
 
-final class KeychainService {
+final class KeychainService: @unchecked Sendable {
     private let service = "com.dustinschaaf.LoggerApp"
 
     func set(_ value: String, for key: String) throws {
@@ -65,4 +65,3 @@ enum KeychainError: LocalizedError {
         }
     }
 }
-

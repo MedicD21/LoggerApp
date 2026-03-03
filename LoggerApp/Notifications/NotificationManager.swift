@@ -1,6 +1,39 @@
 import Foundation
 import UserNotifications
 
+struct NotificationProfileSnapshot: Sendable {
+    let mealReminderEnabled: Bool
+    let proteinReminderEnabled: Bool
+    let weighInReminderEnabled: Bool
+    let medicationReminderEnabled: Bool
+    let hydrationReminderEnabled: Bool
+
+    init(profile: UserProfile) {
+        self.mealReminderEnabled = profile.mealReminderEnabled
+        self.proteinReminderEnabled = profile.proteinReminderEnabled
+        self.weighInReminderEnabled = profile.weighInReminderEnabled
+        self.medicationReminderEnabled = profile.medicationReminderEnabled
+        self.hydrationReminderEnabled = profile.hydrationReminderEnabled
+    }
+}
+
+struct MedicationReminderSnapshot: Sendable {
+    let medicationName: String
+    let nextDueDate: Date
+    let refillReminderDaysAhead: Int
+    let remainingDoses: Int
+    let refillReminderThreshold: Int
+
+    init(schedule: MedicationSchedule) {
+        self.medicationName = schedule.medicationName
+        self.nextDueDate = schedule.nextDueDate
+        self.refillReminderDaysAhead = schedule.refillReminderDaysAhead
+        self.remainingDoses = schedule.remainingDoses
+        self.refillReminderThreshold = schedule.refillReminderThreshold
+    }
+}
+
+@MainActor
 struct NotificationManager {
     private let center = UNUserNotificationCenter.current()
 
@@ -9,9 +42,9 @@ struct NotificationManager {
         guard granted else { throw AppError.notificationsDenied }
     }
 
-    func refreshNotifications(profile: UserProfile, medication: MedicationSchedule?) async throws {
+    func refreshNotifications(profile: NotificationProfileSnapshot, medication: MedicationReminderSnapshot?) async throws {
         try await requestAuthorization()
-        await center.removeAllPendingNotificationRequests()
+        center.removeAllPendingNotificationRequests()
 
         if profile.mealReminderEnabled {
             await scheduleDaily(
@@ -54,7 +87,7 @@ struct NotificationManager {
         }
     }
 
-    func scheduleMedicationNotifications(for schedule: MedicationSchedule) async {
+    func scheduleMedicationNotifications(for schedule: MedicationReminderSnapshot) async {
         await scheduleOneTime(
             identifier: "glp1-24h",
             title: "GLP-1 reminder",
@@ -124,4 +157,3 @@ struct NotificationManager {
         try? await center.add(request)
     }
 }
-

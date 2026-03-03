@@ -19,7 +19,7 @@ final class FoodRepository: FoodRepositoryProtocol {
         self.offClient = offClient
     }
 
-    static func determineRoute(
+    nonisolated static func determineRoute(
         query: String?,
         barcode: String?,
         aiCategory: FoodCategory? = nil,
@@ -117,9 +117,10 @@ final class FoodRepository: FoodRepositoryProtocol {
     }
 
     private func existingCustomFood(named name: String, brand: String?) throws -> FoodItem? {
+        let customRaw = FoodSource.custom.rawValue
         let descriptor = FetchDescriptor<FoodItem>(
             predicate: #Predicate { item in
-                item.sourceRaw == FoodSource.custom.rawValue && item.name == name
+                item.sourceRaw == customRaw && item.name == name
             }
         )
         return try modelContext.fetch(descriptor).first {
@@ -129,9 +130,11 @@ final class FoodRepository: FoodRepositoryProtocol {
 
     private func cachedCustomFoods(matching query: String) throws -> [FoodItem] {
         let lowercased = query.lowercased()
+        let customRaw = FoodSource.custom.rawValue
+        let recipeRaw = FoodSource.recipe.rawValue
         let descriptor = FetchDescriptor<FoodItem>(
             predicate: #Predicate { item in
-                item.sourceRaw == FoodSource.custom.rawValue || item.sourceRaw == FoodSource.recipe.rawValue
+                item.sourceRaw == customRaw || item.sourceRaw == recipeRaw
             },
             sortBy: [SortDescriptor(\.updatedAt, order: .reverse)]
         )
@@ -142,9 +145,10 @@ final class FoodRepository: FoodRepositoryProtocol {
 
     private func cachedPackagedFoods(matching query: String) throws -> [FoodItem] {
         let lowercased = query.lowercased()
+        let offRaw = FoodSource.off.rawValue
         let descriptor = FetchDescriptor<FoodItem>(
             predicate: #Predicate { item in
-                item.sourceRaw == FoodSource.off.rawValue
+                item.sourceRaw == offRaw
             },
             sortBy: [SortDescriptor(\.updatedAt, order: .reverse)]
         )
@@ -192,4 +196,3 @@ final class FoodRepository: FoodRepositoryProtocol {
         }
     }
 }
-

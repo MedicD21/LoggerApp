@@ -40,7 +40,7 @@ private struct BarcodeScannerRepresentable: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: ScannerViewController, context: Context) {}
 }
 
-private final class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+private final class ScannerViewController: UIViewController, @preconcurrency AVCaptureMetadataOutputObjectsDelegate {
     var onCode: ((String) -> Void)?
     var onPermissionDenied: (() -> Void)?
 
@@ -100,4 +100,3 @@ private final class ScannerViewController: UIViewController, AVCaptureMetadataOu
         onCode?(code)
     }
 }
-

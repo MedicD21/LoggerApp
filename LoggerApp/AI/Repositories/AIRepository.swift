@@ -1,6 +1,6 @@
 import Foundation
 
-struct AIRepository: AIRepositoryProtocol {
+struct AIRepository: AIRepositoryProtocol, Sendable {
     private let client: AnthropicClient
 
     init(client: AnthropicClient) {
