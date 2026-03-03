@@ -104,6 +104,7 @@ struct AnthropicClient: Sendable {
         """
         \(task)
         Return JSON only. No prose. No markdown. No commentary. No medical advice.
+        Prefer imperial-friendly units where possible: oz, cup, tbsp, and piece. Use grams only when precision requires it.
         If confidence is under 0.75, keep it low and set needs_user_confirmation to true.
         Never fabricate micronutrients. Never fabricate brand nutrition.
         Use this exact schema:

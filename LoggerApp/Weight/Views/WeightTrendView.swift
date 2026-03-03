@@ -8,7 +8,6 @@ struct WeightTrendView: View {
     @StateObject private var viewModel: WeightViewModel
     @State private var showAddEntry = false
     @State private var entryValue = 0.0
-    @State private var entryUnit: WeightUnit = .lb
 
     init(container: AppContainer, profile: UserProfile) {
         self.container = container
@@ -26,7 +25,7 @@ struct WeightTrendView: View {
                         ForEach(viewModel.entries, id: \.id) { entry in
                             LineMark(
                                 x: .value("Date", entry.date),
-                                y: .value("Weight", entry.kilograms)
+                                y: .value("Weight", entry.pounds)
                             )
                             .foregroundStyle(Color.brandSecondary.opacity(0.45))
                         }
@@ -34,7 +33,7 @@ struct WeightTrendView: View {
                         ForEach(viewModel.movingAverage, id: \.date) { point in
                             LineMark(
                                 x: .value("Date", point.date),
-                                y: .value("Average", point.value)
+                                y: .value("Average", UnitConverter.pounds(fromKilograms: point.value))
                             )
                             .lineStyle(.init(lineWidth: 3))
                             .foregroundStyle(Color.brandPrimary)
@@ -47,7 +46,6 @@ struct WeightTrendView: View {
 
                 Button("Add Weight Entry") {
                     entryValue = profile.weightKg * 2.20462
-                    entryUnit = .lb
                     showAddEntry = true
                 }
                 .buttonStyle(.borderedProminent)
@@ -60,11 +58,7 @@ struct WeightTrendView: View {
                         HStack {
                             Text(entry.date.shortDayLabel)
                             Spacer()
-                            Text(
-                                entry.unit == .kg
-                                ? String(format: "%.1f kg", entry.value)
-                                : String(format: "%.1f lb", entry.value)
-                            )
+                            Text(String(format: "%.1f lb", entry.pounds))
                             .font(.subheadline.weight(.semibold))
                         }
                         .padding(16)
@@ -81,19 +75,13 @@ struct WeightTrendView: View {
             NavigationStack {
                 Form {
                     Section("Weight") {
-                        TextField("Value", value: $entryValue, format: .number)
+                        TextField("Weight (lb)", value: $entryValue, format: .number)
                             .keyboardType(.decimalPad)
-                        Picker("Unit", selection: $entryUnit) {
-                            ForEach(WeightUnit.allCases) { unit in
-                                Text(unit.rawValue.uppercased()).tag(unit)
-                            }
-                        }
-                        .pickerStyle(.segmented)
                     }
 
                     Section {
                         Button("Save Entry") {
-                            viewModel.add(value: entryValue, unit: entryUnit, profile: profile)
+                            viewModel.add(value: entryValue, unit: .lb, profile: profile)
                             showAddEntry = false
                         }
                         .buttonStyle(.borderedProminent)
@@ -114,4 +102,3 @@ struct WeightTrendView: View {
         }
     }
 }
-

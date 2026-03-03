@@ -129,7 +129,7 @@ struct FoodSearchView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(item.displayName)
                     .font(.subheadline.weight(.semibold))
-                Text("\(item.category.rawValue.capitalized) • \(Int((item.kcalPer100g ?? 0).rounded())) kcal / 100g")
+                Text("\(item.category.rawValue.capitalized) • \(UnitConverter.caloriesPerThreePointFiveOunces(kcalPer100g: item.kcalPer100g)) kcal / 3.5 oz")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -141,4 +141,3 @@ struct FoodSearchView: View {
         }
     }
 }
-

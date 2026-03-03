@@ -3,7 +3,7 @@ import Foundation
 @MainActor
 final class FoodDetailViewModel: ObservableObject {
     @Published var amount: Double
-    @Published var unit: PortionUnit = .g
+    @Published var unit: PortionUnit = .oz
     @Published var meal: MealSlot = .breakfast
     @Published var note = ""
     @Published var didLogSuccessfully = false
@@ -15,7 +15,7 @@ final class FoodDetailViewModel: ObservableObject {
     init(food: FoodItem, repository: LogRepositoryProtocol) {
         self.food = food
         self.repository = repository
-        self.amount = food.defaultServingGrams
+        self.amount = UnitConverter.ounces(fromGrams: food.defaultServingGrams)
     }
 
     var grams: Double {

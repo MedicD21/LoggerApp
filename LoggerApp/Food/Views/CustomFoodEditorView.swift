@@ -13,7 +13,7 @@ struct CustomFoodEditorView: View {
     @State private var carbs = 0.0
     @State private var fat = 0.0
     @State private var fiber = 0.0
-    @State private var servingGrams = 100.0
+    @State private var servingOunces = 3.5
     @State private var notes = ""
     @State private var errorMessage: String?
 
@@ -28,7 +28,7 @@ struct CustomFoodEditorView: View {
                 }
             }
 
-            Section("Per 100g") {
+            Section("Per 3.5 oz") {
                 nutrientField("Calories", value: $calories)
                 nutrientField("Protein", value: $protein)
                 nutrientField("Carbs", value: $carbs)
@@ -37,7 +37,7 @@ struct CustomFoodEditorView: View {
             }
 
             Section("Serving") {
-                TextField("Default serving grams", value: $servingGrams, format: .number)
+                TextField("Default serving (oz)", value: $servingOunces, format: .number)
                     .keyboardType(.decimalPad)
                 TextField("Notes", text: $notes, axis: .vertical)
             }
@@ -79,15 +79,15 @@ struct CustomFoodEditorView: View {
             brand: brand.nilIfEmpty,
             source: category == .recipe ? .recipe : .custom,
             category: category,
-            kcalPer100g: calories,
-            proteinPer100g: protein,
-            carbsPer100g: carbs,
-            fatPer100g: fat,
-            fiberPer100g: fiber,
+            kcalPer100g: UnitConverter.per100Grams(fromPerThreePointFiveOunces: calories),
+            proteinPer100g: UnitConverter.per100Grams(fromPerThreePointFiveOunces: protein),
+            carbsPer100g: UnitConverter.per100Grams(fromPerThreePointFiveOunces: carbs),
+            fatPer100g: UnitConverter.per100Grams(fromPerThreePointFiveOunces: fat),
+            fiberPer100g: UnitConverter.per100Grams(fromPerThreePointFiveOunces: fiber),
             sugarPer100g: nil,
             sodiumMgPer100g: nil,
             isKcalEstimated: false,
-            defaultServingGrams: max(servingGrams, 1),
+            defaultServingGrams: max(servingOunces * UnitConverter.gramsPerOunce, 1),
             notes: notes.nilIfEmpty
         )
 
@@ -99,4 +99,3 @@ struct CustomFoodEditorView: View {
         }
     }
 }
-

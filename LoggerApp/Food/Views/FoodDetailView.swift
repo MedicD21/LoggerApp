@@ -25,7 +25,7 @@ struct FoodDetailView: View {
                 TextField("Amount", value: $viewModel.amount, format: .number)
                     .keyboardType(.decimalPad)
                 Picker("Unit", selection: $viewModel.unit) {
-                    ForEach(PortionUnit.allCases) { unit in
+                    ForEach(PortionUnit.imperialFirstCases) { unit in
                         Text(unit.title).tag(unit)
                     }
                 }
@@ -69,4 +69,3 @@ struct FoodDetailView: View {
         LabeledContent(title, value: "\(Int(value.rounded())) \(unit)")
     }
 }
-

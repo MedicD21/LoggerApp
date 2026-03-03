@@ -52,6 +52,10 @@ enum PortionUnit: String, Codable, CaseIterable, Identifiable {
         case .ml: "ml"
         }
     }
+
+    static var imperialFirstCases: [PortionUnit] {
+        [.oz, .lb, .cup, .tbsp, .piece, .ml, .g]
+    }
 }
 
 enum BiologicalSex: String, Codable, CaseIterable, Identifiable {
@@ -203,4 +207,3 @@ enum FoodLookupRoute: Equatable {
     case custom
     case packagedSearch
 }
-

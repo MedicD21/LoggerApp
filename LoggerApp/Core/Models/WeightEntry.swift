@@ -31,5 +31,8 @@ final class WeightEntry {
     var kilograms: Double {
         unit == .kg ? value : value * 0.45359237
     }
-}
 
+    var pounds: Double {
+        unit == .lb ? value : value * 2.2046226218
+    }
+}

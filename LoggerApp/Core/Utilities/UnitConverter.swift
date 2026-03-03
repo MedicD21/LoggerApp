@@ -1,6 +1,11 @@
 import Foundation
 
 enum UnitConverter {
+    static let gramsPerOunce = 28.3495
+    static let gramsPerPound = 453.592
+    static let poundsPerKilogram = 2.2046226218
+    static let centimetersPerInch = 2.54
+
     static func grams(
         amount: Double,
         unit: PortionUnit,
@@ -10,9 +15,9 @@ enum UnitConverter {
         case .g:
             amount
         case .oz:
-            amount * 28.3495
+            amount * gramsPerOunce
         case .lb:
-            amount * 453.592
+            amount * gramsPerPound
         case .cup:
             amount * max(defaultServingGrams, 240)
         case .tbsp:
@@ -25,13 +30,45 @@ enum UnitConverter {
     }
 
     static func displayWeight(_ grams: Double) -> String {
-        if grams >= 454 {
-            return String(format: "%.2f lb", grams / 453.592)
+        if grams >= gramsPerPound {
+            return String(format: "%.2f lb", grams / gramsPerPound)
         }
-        if grams >= 28.35 {
-            return String(format: "%.1f oz", grams / 28.3495)
+        let ounces = grams / gramsPerOunce
+        if ounces >= 1 {
+            return String(format: "%.1f oz", ounces)
         }
-        return String(format: "%.0f g", grams)
+        return String(format: "%.1f oz", ounces)
+    }
+
+    static func ounces(fromGrams grams: Double) -> Double {
+        grams / gramsPerOunce
+    }
+
+    static func pounds(fromKilograms kilograms: Double) -> Double {
+        kilograms * poundsPerKilogram
+    }
+
+    static func kilograms(fromPounds pounds: Double) -> Double {
+        pounds / poundsPerKilogram
+    }
+
+    static func centimeters(feet: Int, inches: Int) -> Double {
+        (Double((feet * 12) + inches)) * centimetersPerInch
+    }
+
+    static func feetAndInches(fromCentimeters centimeters: Double) -> (feet: Int, inches: Int) {
+        let totalInches = Int((centimeters / centimetersPerInch).rounded())
+        return (feet: totalInches / 12, inches: totalInches % 12)
+    }
+
+    static func caloriesPerThreePointFiveOunces(kcalPer100g: Double?) -> Int {
+        let grams = 3.5 * gramsPerOunce
+        let kcal = ((kcalPer100g ?? 0) / 100) * grams
+        return Int(kcal.rounded())
+    }
+
+    static func per100Grams(fromPerThreePointFiveOunces value: Double) -> Double {
+        let grams = 3.5 * gramsPerOunce
+        return (value / grams) * 100
     }
 }
-

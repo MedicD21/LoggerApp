@@ -4,8 +4,9 @@ struct OnboardingView: View {
     let container: AppContainer
 
     @StateObject private var viewModel: SettingsViewModel
-    @State private var weightKg = 82.0
-    @State private var heightCm = 178.0
+    @State private var weightPounds = 180.8
+    @State private var heightFeet = 5
+    @State private var heightInches = 10
     @State private var ageYears = 35
     @State private var sex: BiologicalSex = .male
     @State private var activityLevel: ActivityLevel = .moderatelyActive
@@ -31,10 +32,14 @@ struct OnboardingView: View {
 
                 Form {
                     Section("Profile") {
-                        TextField("Weight (kg)", value: $weightKg, format: .number)
+                        TextField("Weight (lb)", value: $weightPounds, format: .number)
                             .keyboardType(.decimalPad)
-                        TextField("Height (cm)", value: $heightCm, format: .number)
-                            .keyboardType(.decimalPad)
+                        HStack {
+                            TextField("Height (ft)", value: $heightFeet, format: .number)
+                                .keyboardType(.numberPad)
+                            TextField("Height (in)", value: $heightInches, format: .number)
+                                .keyboardType(.numberPad)
+                        }
                         Stepper("Age: \(ageYears)", value: $ageYears, in: 18...100)
                         Picker("Sex", selection: $sex) {
                             ForEach(BiologicalSex.allCases) { value in
@@ -59,8 +64,8 @@ struct OnboardingView: View {
 
                 Button("Continue") {
                     viewModel.completeOnboarding(
-                        weightKg: weightKg,
-                        heightCm: heightCm,
+                        weightKg: UnitConverter.kilograms(fromPounds: weightPounds),
+                        heightCm: UnitConverter.centimeters(feet: max(heightFeet, 0), inches: max(heightInches, 0)),
                         ageYears: ageYears,
                         sex: sex,
                         activityLevel: activityLevel,
@@ -84,4 +89,3 @@ struct OnboardingView: View {
         }
     }
 }
-

@@ -116,5 +116,12 @@ final class UserProfile {
 
         return NutritionMath.macroTargets(tdee: tdee, goal: goal)
     }
-}
 
+    var weightPounds: Double {
+        UnitConverter.pounds(fromKilograms: weightKg)
+    }
+
+    var heightFeetAndInches: (feet: Int, inches: Int) {
+        UnitConverter.feetAndInches(fromCentimeters: heightCm)
+    }
+}
