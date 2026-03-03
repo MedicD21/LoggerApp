@@ -23,14 +23,7 @@ struct HomeView: View {
             }
             .padding(20)
         }
-        .background(
-            LinearGradient(
-                colors: [Color.brandBackground, Color.white],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
-        )
+        .background(BrandBackdrop())
         .navigationTitle("Today")
         .task { viewModel.load(profile: profile) }
         .refreshable { viewModel.load(profile: profile) }
@@ -38,35 +31,38 @@ struct HomeView: View {
 
     private var heroCard: some View {
         VStack(alignment: .leading, spacing: 14) {
+            BrandMarkView(size: 56)
             Text(Date.now.formatted(.dateTime.weekday(.wide).month().day()))
                 .font(.subheadline.weight(.medium))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.brandMuted)
 
             Text("Calories remaining")
-                .font(.headline)
+                .font(.title3.weight(.semibold))
+                .foregroundStyle(Color.brandInk)
 
             let remaining = max(0, Int((viewModel.summary?.targets.calories ?? 0) - (viewModel.summary?.total.calories ?? 0)))
 
             Text("\(remaining)")
-                .font(.system(size: 52, weight: .bold, design: .rounded))
+                .font(.system(size: 56, weight: .black, design: .rounded))
+                .monospacedDigit()
                 .foregroundStyle(Color.brandInk)
 
-            Text("Fast logging, strict confirmations, local-first storage.")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
+            HStack(spacing: 10) {
+                Label("Target \(Int((viewModel.summary?.targets.calories ?? 0).rounded())) kcal", systemImage: "target")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(Color.brandInk)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(Capsule().fill(Color.white.opacity(0.06)))
+
+                Text("Local-first")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(Color.brandMuted)
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(24)
-        .background(
-            RoundedRectangle(cornerRadius: 30, style: .continuous)
-                .fill(
-                    LinearGradient(
-                        colors: [Color.brandSecondary.opacity(0.35), Color.white],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-        )
+        .brandHeroPanel(accent: .brandSecondary)
     }
 
     private var ringsSection: some View {
@@ -105,24 +101,26 @@ struct HomeView: View {
     private var insightsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Smart Alerts")
-                .font(.headline)
+                .font(.title3.weight(.bold))
+                .foregroundStyle(Color.brandInk)
 
             if viewModel.insights.isEmpty {
                 Text("No issues flagged yet. Logging consistency improves the guidance.")
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.brandMuted)
             } else {
                 ForEach(viewModel.insights) { insight in
                     VStack(alignment: .leading, spacing: 6) {
                         Text(insight.title)
                             .font(.subheadline.weight(.semibold))
+                            .foregroundStyle(Color.brandInk)
                         Text(insight.detail)
                             .font(.footnote)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.brandMuted)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(16)
-                    .background(RoundedRectangle(cornerRadius: 20).fill(Color.brandCard))
+                    .brandPanel(cornerRadius: 20)
                 }
             }
         }
@@ -131,7 +129,8 @@ struct HomeView: View {
     private var mealsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Meals")
-                .font(.headline)
+                .font(.title3.weight(.bold))
+                .foregroundStyle(Color.brandInk)
 
             Picker("Meal", selection: $selectedMeal) {
                 ForEach(MealSlot.allCases) { meal in
@@ -144,7 +143,7 @@ struct HomeView: View {
             if entries.isEmpty {
                 Text("No entries in \(selectedMeal.title.lowercased()) yet.")
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.brandMuted)
                     .padding(.vertical, 8)
             } else {
                 ForEach(entries, id: \.id) { entry in
@@ -152,19 +151,20 @@ struct HomeView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(entry.foodItem?.displayName ?? "Unknown Food")
                                 .font(.subheadline.weight(.semibold))
+                                .foregroundStyle(Color.brandInk)
                             Text(UnitConverter.displayWeight(entry.amountGrams))
                                 .font(.caption)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.brandMuted)
                         }
                         Spacer()
                         Text("\(Int(entry.nutrition.calories.rounded())) kcal")
                             .font(.subheadline.weight(.medium))
+                            .foregroundStyle(Color.brandInk)
                     }
                     .padding(16)
-                    .background(RoundedRectangle(cornerRadius: 18).fill(Color.brandCard))
+                    .brandPanel(cornerRadius: 18)
                 }
             }
         }
     }
 }
-

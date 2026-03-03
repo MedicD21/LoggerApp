@@ -52,11 +52,13 @@ struct RootView: View {
                     }
                     .tag(NavigationRouter.Tab.settings)
                 }
-                .background(Color.brandBackground.ignoresSafeArea())
+                .toolbarBackground(.visible, for: .tabBar)
+                .toolbarBackground(Color.brandSurface, for: .tabBar)
+                .toolbarColorScheme(.dark, for: .tabBar)
+                .background(BrandBackdrop())
             } else {
                 OnboardingView(container: container)
             }
         }
     }
 }
-

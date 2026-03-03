@@ -23,11 +23,14 @@ struct OnboardingView: View {
                 Spacer(minLength: 20)
 
                 VStack(alignment: .leading, spacing: 10) {
+                    BrandMarkView(size: 88)
+                        .padding(.bottom, 6)
                     Text("Private nutrition tracking, built for fast daily use.")
                         .font(.system(size: 34, weight: .bold, design: .rounded))
+                        .foregroundStyle(Color.brandInk)
                     Text("Set the baseline once. Everything else can be adjusted later in Settings.")
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.brandMuted)
                 }
 
                 Form {
@@ -61,6 +64,7 @@ struct OnboardingView: View {
                 .scrollContentBackground(.hidden)
                 .background(Color.clear)
                 .frame(maxHeight: 380)
+                .brandPanel(cornerRadius: 28)
 
                 Button("Continue") {
                     viewModel.completeOnboarding(
@@ -73,19 +77,13 @@ struct OnboardingView: View {
                     )
                 }
                 .buttonStyle(.borderedProminent)
+                .controlSize(.large)
                 .frame(maxWidth: .infinity)
 
                 Spacer()
             }
             .padding(24)
-            .background(
-                LinearGradient(
-                    colors: [Color.brandBackground, Color.white],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                .ignoresSafeArea()
-            )
+            .background(BrandBackdrop())
         }
     }
 }

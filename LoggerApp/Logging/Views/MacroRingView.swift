@@ -15,7 +15,7 @@ struct MacroRingView: View {
         VStack(spacing: 10) {
             ZStack {
                 Circle()
-                    .stroke(tint.opacity(0.14), lineWidth: 12)
+                    .stroke(Color.brandSurface, lineWidth: 12)
                 Circle()
                     .trim(from: 0, to: progress)
                     .stroke(tint, style: StrokeStyle(lineWidth: 12, lineCap: .round))
@@ -24,17 +24,22 @@ struct MacroRingView: View {
                 VStack(spacing: 4) {
                     Text("\(Int(consumed.rounded()))")
                         .font(.title3.weight(.bold))
+                        .monospacedDigit()
+                        .foregroundStyle(Color.brandInk)
                     Text("of \(Int(target.rounded()))")
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.brandMuted)
                 }
             }
             .frame(width: 104, height: 104)
 
             Text(title)
                 .font(.subheadline.weight(.semibold))
+                .foregroundStyle(Color.brandInk)
         }
+        .padding(.vertical, 16)
+        .padding(.horizontal, 12)
+        .brandPanel(cornerRadius: 26)
         .frame(maxWidth: .infinity)
     }
 }
-

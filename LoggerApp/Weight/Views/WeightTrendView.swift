@@ -20,7 +20,8 @@ struct WeightTrendView: View {
             VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("90-Day Trend")
-                        .font(.headline)
+                        .font(.title3.weight(.bold))
+                        .foregroundStyle(Color.brandInk)
                     Chart {
                         ForEach(viewModel.entries, id: \.id) { entry in
                             LineMark(
@@ -39,9 +40,20 @@ struct WeightTrendView: View {
                             .foregroundStyle(Color.brandPrimary)
                         }
                     }
+                    .chartXAxis {
+                        AxisMarks(values: .automatic(desiredCount: 4))
+                    }
+                    .chartYAxis {
+                        AxisMarks(position: .leading)
+                    }
+                    .chartPlotStyle { plot in
+                        plot
+                            .background(Color.brandSurface.opacity(0.55))
+                            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                    }
                     .frame(height: 260)
                     .padding()
-                    .background(RoundedRectangle(cornerRadius: 24).fill(Color.brandCard))
+                    .brandPanel(cornerRadius: 24)
                 }
 
                 Button("Add Weight Entry") {
@@ -49,26 +61,30 @@ struct WeightTrendView: View {
                     showAddEntry = true
                 }
                 .buttonStyle(.borderedProminent)
+                .controlSize(.large)
 
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Recent Entries")
-                        .font(.headline)
+                        .font(.title3.weight(.bold))
+                        .foregroundStyle(Color.brandInk)
 
                     ForEach(viewModel.entries.suffix(10).reversed(), id: \.id) { entry in
                         HStack {
                             Text(entry.date.shortDayLabel)
+                                .foregroundStyle(Color.brandMuted)
                             Spacer()
                             Text(String(format: "%.1f lb", entry.pounds))
-                            .font(.subheadline.weight(.semibold))
+                                .font(.subheadline.weight(.semibold))
+                                .foregroundStyle(Color.brandInk)
                         }
                         .padding(16)
-                        .background(RoundedRectangle(cornerRadius: 18).fill(Color.brandCard))
+                        .brandPanel(cornerRadius: 18)
                     }
                 }
             }
             .padding(20)
         }
-        .background(Color.brandBackground.ignoresSafeArea())
+        .background(BrandBackdrop())
         .navigationTitle("Trends")
         .task { viewModel.load() }
         .sheet(isPresented: $showAddEntry) {
@@ -85,8 +101,11 @@ struct WeightTrendView: View {
                             showAddEntry = false
                         }
                         .buttonStyle(.borderedProminent)
+                        .controlSize(.large)
                     }
                 }
+                .scrollContentBackground(.hidden)
+                .background(BrandBackdrop())
                 .navigationTitle("Add Weight")
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {

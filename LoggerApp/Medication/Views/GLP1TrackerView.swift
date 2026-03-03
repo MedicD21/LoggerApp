@@ -31,7 +31,7 @@ struct GLP1TrackerView: View {
             }
             .padding(20)
         }
-        .background(Color.brandBackground.ignoresSafeArea())
+        .background(BrandBackdrop())
         .navigationTitle("GLP-1")
         .task { viewModel.load() }
         .sheet(isPresented: $showSetup) {
@@ -84,11 +84,13 @@ struct GLP1TrackerView: View {
             showDoseSheet = true
         }
         .buttonStyle(.borderedProminent)
+        .controlSize(.large)
 
         Button("Update Schedule") {
             showSetup = true
         }
         .buttonStyle(.bordered)
+        .controlSize(.large)
 
         recentDosesSection
     }
@@ -101,50 +103,45 @@ struct GLP1TrackerView: View {
         return VStack(alignment: .leading, spacing: 10) {
             Text(schedule.medicationName)
                 .font(.title2.weight(.bold))
+                .foregroundStyle(Color.brandInk)
             Text(schedule.doseDisplay)
                 .font(.subheadline)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.brandMuted)
             Text(dueText)
                 .font(.headline)
+                .foregroundStyle(Color.brandInk)
             Text("Next suggested site: \(schedule.nextSuggestedSite)")
                 .font(.subheadline)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.brandMuted)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(24)
-        .background(
-            RoundedRectangle(cornerRadius: 28)
-                .fill(
-                    LinearGradient(
-                        colors: [Color.brandPrimary.opacity(0.22), Color.white],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-        )
+        .brandHeroPanel(cornerRadius: 28, accent: .brandPrimary)
     }
 
     private var recentDosesSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Recent Doses")
-                .font(.headline)
+                .font(.title3.weight(.bold))
+                .foregroundStyle(Color.brandInk)
 
             ForEach(viewModel.doses, id: \.id) { dose in
                 VStack(alignment: .leading, spacing: 4) {
                     Text(dose.administeredAt.formatted(date: .abbreviated, time: .shortened))
                         .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(Color.brandInk)
                     Text("Site: \(dose.site)")
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.brandMuted)
                     if let sideEffects = dose.sideEffects, !sideEffects.isEmpty {
                         Text("Side effects: \(sideEffects)")
                             .font(.caption)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(Color.brandMuted)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(16)
-                .background(RoundedRectangle(cornerRadius: 18).fill(Color.brandCard))
+                .brandPanel(cornerRadius: 18)
             }
         }
     }
@@ -153,16 +150,18 @@ struct GLP1TrackerView: View {
         VStack(alignment: .leading, spacing: 14) {
             Text("No medication schedule yet.")
                 .font(.headline)
+                .foregroundStyle(Color.brandInk)
             Text("This tracker is for reminders and logs only. It does not provide dosage advice or medical guidance.")
                 .font(.subheadline)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color.brandMuted)
             Button("Set Up Tracker") {
                 showSetup = true
             }
             .buttonStyle(.borderedProminent)
+            .controlSize(.large)
         }
         .padding(24)
-        .background(RoundedRectangle(cornerRadius: 24).fill(Color.brandCard))
+        .brandPanel(cornerRadius: 24)
     }
 }
 
@@ -221,6 +220,8 @@ private struct MedicationSetupView: View {
                     .buttonStyle(.borderedProminent)
                 }
             }
+            .scrollContentBackground(.hidden)
+            .background(BrandBackdrop())
             .navigationTitle("Medication Setup")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {

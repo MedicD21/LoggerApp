@@ -10,7 +10,8 @@ struct LoggerAppApp: App {
             RootView(container: container, router: router)
                 .modelContainer(container.modelContainer)
                 .tint(.brandPrimary)
+                .preferredColorScheme(.dark)
+                .fontDesign(.rounded)
         }
     }
 }
-

@@ -53,6 +53,8 @@ struct FoodDetailView: View {
                 .frame(maxWidth: .infinity)
             }
         }
+        .scrollContentBackground(.hidden)
+        .background(BrandBackdrop())
         .navigationTitle(food.name)
         .sensoryFeedback(.success, trigger: viewModel.didLogSuccessfully)
         .onChange(of: viewModel.didLogSuccessfully) { _, newValue in

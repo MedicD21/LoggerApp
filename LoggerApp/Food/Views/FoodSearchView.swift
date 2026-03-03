@@ -86,7 +86,8 @@ struct FoodSearchView: View {
             }
         }
         .scrollContentBackground(.hidden)
-        .background(Color.brandBackground)
+        .background(BrandBackdrop())
+        .listStyle(.insetGrouped)
         .navigationTitle("Food Search")
         .task { viewModel.loadRecent() }
         .sheet(isPresented: $showScanner) {

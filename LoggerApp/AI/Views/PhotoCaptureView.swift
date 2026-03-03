@@ -24,7 +24,7 @@ struct PhotoCaptureView: View {
                     RoundedRectangle(cornerRadius: 30, style: .continuous)
                         .fill(
                             LinearGradient(
-                                colors: [Color.brandSecondary.opacity(0.22), Color.brandPrimary.opacity(0.12)],
+                                colors: [Color.brandAccent.opacity(0.18), Color.brandPrimary.opacity(0.18), Color.brandSurface],
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             )
@@ -34,18 +34,26 @@ struct PhotoCaptureView: View {
                             VStack(spacing: 12) {
                                 Image(systemName: "camera.macro")
                                     .font(.system(size: 42))
+                                    .foregroundStyle(Color.brandInk)
                                 Text("Capture a meal and confirm the match before anything is logged.")
                                     .multilineTextAlignment(.center)
                                     .font(.headline)
+                                    .foregroundStyle(Color.brandInk)
                                     .padding(.horizontal)
                             }
                         }
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 30, style: .continuous)
+                                .strokeBorder(Color.brandStroke, lineWidth: 1)
+                        }
+                        .shadow(color: Color.brandShadow, radius: 26, x: 0, y: 16)
 
                     PhotosPicker(selection: $selectedItem, matching: .images) {
                         Label("Choose from Library", systemImage: "photo.on.rectangle")
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
 
                     Button {
                         showCamera = true
@@ -54,6 +62,7 @@ struct PhotoCaptureView: View {
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.bordered)
+                    .controlSize(.large)
 
                     if viewModel.isLoading {
                         ProgressView("Analyzing photo…")
@@ -62,7 +71,7 @@ struct PhotoCaptureView: View {
                     Spacer()
                 }
                 .padding(24)
-                .background(Color.brandBackground.ignoresSafeArea())
+                .background(BrandBackdrop())
                 .navigationTitle("Photo Log")
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
@@ -136,4 +145,3 @@ private struct CameraPickerView: UIViewControllerRepresentable {
         }
     }
 }
-

@@ -89,6 +89,8 @@ struct SettingsView: View {
                 }
             }
         }
+        .scrollContentBackground(.hidden)
+        .background(BrandBackdrop())
         .navigationTitle("Settings")
         .onDisappear {
             profile.updatedAt = .now

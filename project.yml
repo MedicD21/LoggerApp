@@ -17,7 +17,7 @@ settings:
     INFOPLIST_KEY_NSHealthShareUsageDescription: Optional Apple Health weight sync is available when you enable it.
     INFOPLIST_KEY_NSHealthUpdateUsageDescription: Optional Apple Health weight sync can write confirmed weight entries.
     INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
-    INFOPLIST_KEY_UILaunchScreen_Generation: YES
+    INFOPLIST_KEY_UILaunchStoryboardName: LaunchScreen
     INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: UIInterfaceOrientationPortrait
 targets:
   LoggerApp:
@@ -57,4 +57,3 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.dustinschaaf.LoggerAppTests
         TEST_HOST: $(BUILT_PRODUCTS_DIR)/LoggerApp.app/LoggerApp
         BUNDLE_LOADER: $(TEST_HOST)
-
