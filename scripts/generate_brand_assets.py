@@ -176,7 +176,8 @@ def save_icon_set() -> None:
     ]
 
     for filename, size in specs:
-        icon.resize((size, size), Image.Resampling.LANCZOS).save(APP_ICON / filename)
+        rendered = icon.resize((size, size), Image.Resampling.LANCZOS).convert("RGB")
+        rendered.save(APP_ICON / filename)
 
     contents = {
         "images": [
