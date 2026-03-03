@@ -7,6 +7,10 @@ final class AIReviewViewModel: ObservableObject {
         let candidate: AIFoodResponse.Item
         let grams: Double
         var match: FoodItem?
+
+        var nutrition: NutritionSnapshot? {
+            match?.nutrition(for: grams)
+        }
     }
 
     @Published private(set) var candidates: [ResolvedCandidate] = []
@@ -41,7 +45,7 @@ final class AIReviewViewModel: ObservableObject {
         do {
             var resolved: [ResolvedCandidate] = []
             for item in response.items {
-                let results = try await foodRepository.search(query: item.name)
+                let results = try await foodRepository.search(query: item.name, preferredCategory: item.category)
                 let preferred = preferredMatch(for: item, from: results)
                 resolved.append(
                     ResolvedCandidate(
@@ -77,7 +81,7 @@ final class AIReviewViewModel: ObservableObject {
                     food: match,
                     grams: candidate.grams,
                     meal: meal,
-                    note: "AI confirmed"
+                    note: confirmationNote(for: candidate)
                 )
             }
             didConfirm = true
@@ -95,5 +99,14 @@ final class AIReviewViewModel: ObservableObject {
         case .recipe:
             return results.first(where: { $0.source == .recipe || $0.source == .custom }) ?? results.first
         }
+    }
+
+    private func confirmationNote(for candidate: ResolvedCandidate) -> String {
+        let confidence = Int((candidate.candidate.confidence * 100).rounded())
+        let note = candidate.candidate.notes.trimmingCharacters(in: .whitespacesAndNewlines)
+        if note.isEmpty {
+            return "AI confirmed • \(confidence)% confidence"
+        }
+        return "AI confirmed • \(confidence)% confidence • \(note)"
     }
 }

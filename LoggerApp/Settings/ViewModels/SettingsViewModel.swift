@@ -5,6 +5,8 @@ import SwiftData
 final class SettingsViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published private(set) var hasAPIKey: Bool
+    @Published private(set) var hasUSDAAPIKey: Bool
+    @Published private(set) var usingUSDAFallbackKey: Bool
     @Published var exportURL: URL?
 
     private let container: AppContainer
@@ -12,6 +14,8 @@ final class SettingsViewModel: ObservableObject {
     init(container: AppContainer) {
         self.container = container
         self.hasAPIKey = container.anthropicClient.hasAPIKey()
+        self.hasUSDAAPIKey = container.usdaClient.hasCustomAPIKey()
+        self.usingUSDAFallbackKey = container.usdaClient.usingFallbackAPIKey()
     }
 
     func saveAPIKey(_ key: String) {
@@ -26,6 +30,22 @@ final class SettingsViewModel: ObservableObject {
     func deleteAPIKey() {
         container.anthropicClient.removeAPIKey()
         hasAPIKey = false
+    }
+
+    func saveUSDAAPIKey(_ key: String) {
+        do {
+            try container.usdaClient.saveAPIKey(key)
+            hasUSDAAPIKey = true
+            usingUSDAFallbackKey = false
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    func deleteUSDAAPIKey() {
+        container.usdaClient.removeAPIKey()
+        hasUSDAAPIKey = false
+        usingUSDAFallbackKey = true
     }
 
     func completeOnboarding(
@@ -98,7 +118,10 @@ final class SettingsViewModel: ObservableObject {
             try wipe(FetchDescriptor<MedicationSchedule>())
             try wipe(FetchDescriptor<UserProfile>())
             container.anthropicClient.removeAPIKey()
+            container.usdaClient.removeAPIKey()
             hasAPIKey = false
+            hasUSDAAPIKey = false
+            usingUSDAFallbackKey = true
             container.save()
         } catch {
             errorMessage = error.localizedDescription

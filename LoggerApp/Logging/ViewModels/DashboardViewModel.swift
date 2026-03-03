@@ -1,4 +1,5 @@
 import Foundation
+import OSLog
 
 @MainActor
 final class DashboardViewModel: ObservableObject {
@@ -6,17 +7,40 @@ final class DashboardViewModel: ObservableObject {
     @Published private(set) var insights: [WeeklyInsight] = []
     @Published var errorMessage: String?
 
+    private let logger = Logger(subsystem: "LoggerApp", category: "DashboardViewModel")
     private let repository: LogRepositoryProtocol
+    private let aiRepository: AIRepositoryProtocol?
 
-    init(repository: LogRepositoryProtocol) {
+    init(repository: LogRepositoryProtocol, aiRepository: AIRepositoryProtocol? = nil) {
         self.repository = repository
+        self.aiRepository = aiRepository
     }
 
-    func load(profile: UserProfile) {
+    func load(profile: UserProfile) async {
         do {
             let summary = try repository.summary(for: .now, profile: profile)
             self.summary = summary
-            insights = buildInsights(from: summary)
+            let localInsights = buildInsights(from: summary)
+            insights = localInsights
+
+            guard profile.aiEnabled, let aiRepository else { return }
+            let context = AIInsightContext(
+                date: summary.date,
+                total: summary.total,
+                targets: summary.targets,
+                weeklyAverageCalories: summary.weeklyAverageCalories,
+                usesCustomTargets: profile.usesCustomTargets,
+                goal: profile.goal.rawValue
+            )
+
+            do {
+                let aiInsights = try await aiRepository.generateInsights(context: context)
+                if !aiInsights.isEmpty {
+                    insights = aiInsights
+                }
+            } catch {
+                logger.error("AI insights unavailable, using local findings: \(String(describing: error), privacy: .public)")
+            }
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -30,30 +54,33 @@ final class DashboardViewModel: ObservableObject {
         if total.protein < targets.proteinGrams * 0.6 {
             output.append(WeeklyInsight(
                 title: "Protein is lagging",
-                detail: "You are at \(Int(total.protein))g against a \(Int(targets.proteinGrams))g target."
+                detail: "You are at \(Int(total.protein))g against a \(Int(targets.proteinGrams))g target.",
+                source: .local
             ))
         }
 
         if total.calories > targets.calories {
             output.append(WeeklyInsight(
                 title: "Calories are over target",
-                detail: "You are \(Int(total.calories - targets.calories)) kcal above today’s target."
+                detail: "You are \(Int(total.calories - targets.calories)) kcal above today’s target.",
+                source: .local
             ))
         } else if total.calories < targets.calories * 0.55 {
             output.append(WeeklyInsight(
                 title: "Logging looks incomplete",
-                detail: "Today is far below target. This often means a meal has not been logged yet."
+                detail: "Today is far below target. This often means a meal has not been logged yet.",
+                source: .local
             ))
         }
 
         if summary.weeklyAverageCalories > targets.calories * 1.1 {
             output.append(WeeklyInsight(
                 title: "Weekly average is trending high",
-                detail: "Your 7-day average is \(Int(summary.weeklyAverageCalories)) kcal."
+                detail: "Your 7-day average is \(Int(summary.weeklyAverageCalories)) kcal.",
+                source: .local
             ))
         }
 
         return output
     }
 }
-

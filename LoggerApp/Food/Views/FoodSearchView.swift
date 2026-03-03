@@ -2,6 +2,7 @@ import SwiftUI
 
 struct FoodSearchView: View {
     let container: AppContainer
+    let profile: UserProfile
 
     @StateObject private var viewModel: FoodSearchViewModel
     @State private var showScanner = false
@@ -9,8 +10,9 @@ struct FoodSearchView: View {
     @State private var showPhotoCapture = false
     @State private var showNLP = false
 
-    init(container: AppContainer) {
+    init(container: AppContainer, profile: UserProfile) {
         self.container = container
+        self.profile = profile
         _viewModel = StateObject(wrappedValue: FoodSearchViewModel(repository: container.foodRepository))
     }
 
@@ -48,13 +50,26 @@ struct FoodSearchView: View {
                 actionRow("Log from photo", systemImage: "camera") {
                     showPhotoCapture = true
                 }
+                .disabled(!canUseAI)
 
                 actionRow("Natural language log", systemImage: "text.bubble") {
                     showNLP = true
                 }
+                .disabled(!canUseAI)
 
                 actionRow("Create custom food", systemImage: "square.and.pencil") {
                     showCustomFoodEditor = true
+                }
+            }
+
+            if !canUseAI {
+                Section("AI Setup") {
+                    Text(
+                        profile.aiEnabled
+                        ? "Add your Anthropic API key in Settings to enable photo and natural-language logging."
+                        : "AI logging is disabled in Settings."
+                    )
+                    .foregroundStyle(.secondary)
                 }
             }
 
@@ -143,8 +158,8 @@ struct FoodSearchView: View {
                     .foregroundStyle(.secondary)
             }
             Spacer()
-            if item.source == .off {
-                Image(systemName: "shippingbox")
+            if item.source == .off || item.source == .usda {
+                Image(systemName: item.source.systemImage)
                     .foregroundStyle(.secondary)
             }
         }
@@ -153,5 +168,9 @@ struct FoodSearchView: View {
     private func macroSummary(for item: FoodItem) -> String {
         let nutrition = item.nutrition(for: item.defaultServingGrams)
         return "P \(nutrition.protein.decimalString())g • C \(nutrition.carbs.decimalString())g • F \(nutrition.fat.decimalString())g"
+    }
+
+    private var canUseAI: Bool {
+        profile.aiEnabled && container.anthropicClient.hasAPIKey()
     }
 }

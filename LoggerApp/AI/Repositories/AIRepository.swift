@@ -18,4 +18,8 @@ struct AIRepository: AIRepositoryProtocol, Sendable {
     func decomposeRecipe(_ text: String) async throws -> AIFoodResponse {
         try await client.decomposeRecipe(from: text)
     }
+
+    func generateInsights(context: AIInsightContext) async throws -> [WeeklyInsight] {
+        try await client.generateInsights(context: context)
+    }
 }

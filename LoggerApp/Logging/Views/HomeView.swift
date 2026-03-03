@@ -10,7 +10,12 @@ struct HomeView: View {
     init(container: AppContainer, profile: UserProfile) {
         self.container = container
         self.profile = profile
-        _viewModel = StateObject(wrappedValue: DashboardViewModel(repository: container.logRepository))
+        _viewModel = StateObject(
+            wrappedValue: DashboardViewModel(
+                repository: container.logRepository,
+                aiRepository: container.aiRepository
+            )
+        )
     }
 
     var body: some View {
@@ -25,8 +30,8 @@ struct HomeView: View {
         }
         .background(BrandBackdrop())
         .navigationTitle("Today")
-        .task { viewModel.load(profile: profile) }
-        .refreshable { viewModel.load(profile: profile) }
+        .task { await viewModel.load(profile: profile) }
+        .refreshable { await viewModel.load(profile: profile) }
     }
 
     private var heroCard: some View {
@@ -111,9 +116,18 @@ struct HomeView: View {
             } else {
                 ForEach(viewModel.insights) { insight in
                     VStack(alignment: .leading, spacing: 6) {
-                        Text(insight.title)
-                            .font(.subheadline.weight(.semibold))
-                            .foregroundStyle(Color.brandInk)
+                        HStack {
+                            Text(insight.title)
+                                .font(.subheadline.weight(.semibold))
+                                .foregroundStyle(Color.brandInk)
+                            Spacer()
+                            Text(insight.source == .ai ? "AI" : "Local")
+                                .font(.caption2.weight(.bold))
+                                .foregroundStyle(insight.source == .ai ? Color.brandSecondary : Color.brandMuted)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(Capsule().fill(Color.white.opacity(0.05)))
+                        }
                         Text(insight.detail)
                             .font(.footnote)
                             .foregroundStyle(Color.brandMuted)

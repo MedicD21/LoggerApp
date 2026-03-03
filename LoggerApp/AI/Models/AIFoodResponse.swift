@@ -39,10 +39,28 @@ struct AIFoodResponse: Codable, Hashable {
         let data = Data(json.utf8)
         let decoder = JSONDecoder()
         let decoded = try decoder.decode(AIFoodResponse.self, from: data)
-        let needsReview = decoded.items.contains { $0.confidence < 0.75 }
+        let sanitizedItems = decoded.items.compactMap { item -> Item? in
+            let name = item.name.trimmingCharacters(in: .whitespacesAndNewlines)
+            let notes = item.notes.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !name.isEmpty else { return nil }
+
+            return Item(
+                name: name,
+                category: item.category,
+                estimatedPortion: FoodItemPortion(
+                    amount: max(item.estimatedPortion.amount, 0.25),
+                    unit: item.estimatedPortion.unit
+                ),
+                confidence: min(max(item.confidence, 0), 1),
+                notes: notes
+            )
+        }
+        let needsReview = sanitizedItems.contains { $0.confidence < 0.75 }
         return AIFoodResponse(
-            items: decoded.items,
-            assumptions: decoded.assumptions,
+            items: sanitizedItems,
+            assumptions: decoded.assumptions.map {
+                $0.trimmingCharacters(in: .whitespacesAndNewlines)
+            }.filter { !$0.isEmpty },
             needsUserConfirmation: decoded.needsUserConfirmation || needsReview
         )
     }
@@ -55,4 +73,3 @@ struct AIFoodResponse: Codable, Hashable {
         return String(text[start...end])
     }
 }
-

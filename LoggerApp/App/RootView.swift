@@ -21,7 +21,7 @@ struct RootView: View {
                     .tag(NavigationRouter.Tab.today)
 
                     NavigationStack {
-                        FoodSearchView(container: container)
+                        FoodSearchView(container: container, profile: profile)
                     }
                     .tabItem {
                         Label("Search", systemImage: "magnifyingglass")

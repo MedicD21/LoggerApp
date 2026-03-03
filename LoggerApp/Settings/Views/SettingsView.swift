@@ -6,6 +6,7 @@ struct SettingsView: View {
 
     @StateObject private var viewModel: SettingsViewModel
     @State private var apiKey = ""
+    @State private var usdaAPIKey = ""
     @State private var showDeleteAlert = false
 
     init(container: AppContainer, profile: UserProfile) {
@@ -117,6 +118,35 @@ struct SettingsView: View {
                         viewModel.deleteAPIKey()
                     }
                 }
+            }
+
+            Section("USDA FoodData Central") {
+                SecureField(
+                    viewModel.hasUSDAAPIKey ? "Custom API key saved" : "Optional: paste USDA API key",
+                    text: $usdaAPIKey
+                )
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+
+                Button(viewModel.hasUSDAAPIKey ? "Replace USDA API Key" : "Save USDA API Key") {
+                    guard !usdaAPIKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
+                    viewModel.saveUSDAAPIKey(usdaAPIKey)
+                    usdaAPIKey = ""
+                }
+
+                if viewModel.hasUSDAAPIKey {
+                    Button("Remove USDA API Key", role: .destructive) {
+                        viewModel.deleteUSDAAPIKey()
+                    }
+                }
+
+                Text(
+                    viewModel.usingUSDAFallbackKey
+                    ? "USDA search is active with DEMO_KEY. Add your own key for production throughput."
+                    : "USDA search is active with your saved API key."
+                )
+                .font(.footnote)
+                .foregroundStyle(.secondary)
             }
 
             Section("Data") {

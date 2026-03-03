@@ -59,9 +59,28 @@ struct PhotoReviewView: View {
                                 .font(.footnote)
                                 .foregroundStyle(.secondary)
 
-                            Text("\(UnitConverter.displayWeight(candidate.grams)) • \(candidate.candidate.category.rawValue.capitalized)")
+                            HStack(spacing: 8) {
+                                Text("\(UnitConverter.displayWeight(candidate.grams)) • \(candidate.candidate.category.rawValue.capitalized)")
+                                if let match = candidate.match {
+                                    Text(match.source.title)
+                                }
+                            }
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+
+                            if let nutrition = candidate.nutrition {
+                                Text(
+                                    "\(Int(nutrition.calories.rounded())) kcal • P \(nutrition.protein.decimalString())g • C \(nutrition.carbs.decimalString())g • F \(nutrition.fat.decimalString())g"
+                                )
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
+                            }
+
+                            if !candidate.candidate.notes.isEmpty {
+                                Text(candidate.candidate.notes)
+                                    .font(.caption2)
+                                    .foregroundStyle(.secondary)
+                            }
                         }
                         .padding(.vertical, 6)
                     }

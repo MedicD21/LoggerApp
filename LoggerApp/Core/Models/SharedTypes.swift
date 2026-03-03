@@ -2,11 +2,42 @@ import Foundation
 
 enum FoodSource: String, Codable, CaseIterable, Identifiable {
     case off
+    case usda
     case generic
     case custom
     case recipe
 
     var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .off:
+            "Open Food Facts"
+        case .usda:
+            "USDA"
+        case .generic:
+            "Generic DB"
+        case .custom:
+            "Custom"
+        case .recipe:
+            "Recipe"
+        }
+    }
+
+    var systemImage: String {
+        switch self {
+        case .off:
+            "shippingbox"
+        case .usda:
+            "leaf"
+        case .generic:
+            "fork.knife"
+        case .custom:
+            "square.and.pencil"
+        case .recipe:
+            "book.closed"
+        }
+    }
 }
 
 enum FoodCategory: String, Codable, CaseIterable, Identifiable {
@@ -180,10 +211,25 @@ struct DailyNutritionSummary: Hashable {
     var weeklyAverageCalories: Double
 }
 
+struct AIInsightContext: Codable, Sendable {
+    let date: Date
+    let total: NutritionSnapshot
+    let targets: MacroTargets
+    let weeklyAverageCalories: Double
+    let usesCustomTargets: Bool
+    let goal: String
+}
+
 struct WeeklyInsight: Identifiable, Hashable {
+    enum Source: String, Codable, Hashable {
+        case local
+        case ai
+    }
+
     let id = UUID()
     let title: String
     let detail: String
+    let source: Source
 }
 
 struct GenericFoodSeed: Codable, Hashable {

@@ -2,10 +2,16 @@ import Foundation
 
 @MainActor
 protocol FoodRepositoryProtocol {
-    func search(query: String) async throws -> [FoodItem]
+    func search(query: String, preferredCategory: FoodCategory?) async throws -> [FoodItem]
     func fetchByBarcode(_ barcode: String) async throws -> [FoodItem]
     func upsertCustomFood(_ item: FoodItem) throws
     func recentFoods(limit: Int) throws -> [FoodItem]
+}
+
+extension FoodRepositoryProtocol {
+    func search(query: String) async throws -> [FoodItem] {
+        try await search(query: query, preferredCategory: nil)
+    }
 }
 
 @MainActor
@@ -34,4 +40,5 @@ protocol AIRepositoryProtocol: Sendable {
     func analyzePhoto(_ imageData: Data) async throws -> AIFoodResponse
     func parseLogText(_ text: String) async throws -> AIFoodResponse
     func decomposeRecipe(_ text: String) async throws -> AIFoodResponse
+    func generateInsights(context: AIInsightContext) async throws -> [WeeklyInsight]
 }

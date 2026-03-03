@@ -12,6 +12,7 @@ final class AppContainer: ObservableObject {
 
     let genericFoodDatabase: GenericFoodDatabase
     let offClient: OFFClient
+    let usdaClient: USDAClient
     let anthropicClient: AnthropicClient
 
     let foodRepository: FoodRepository
@@ -36,11 +37,13 @@ final class AppContainer: ObservableObject {
 
         self.genericFoodDatabase = GenericFoodDatabase()
         self.offClient = OFFClient()
+        self.usdaClient = USDAClient(keychain: keychain)
         self.anthropicClient = AnthropicClient(keychain: keychain)
         self.foodRepository = FoodRepository(
             modelContext: context,
             genericDatabase: genericFoodDatabase,
-            offClient: offClient
+            offClient: offClient,
+            usdaClient: usdaClient
         )
         self.logRepository = LogRepository(modelContext: context)
         self.weightRepository = WeightRepository(
@@ -85,4 +88,3 @@ final class AppContainer: ObservableObject {
         }
     }
 }
-
