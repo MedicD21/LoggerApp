@@ -22,7 +22,7 @@ struct FoodDetailView: View {
             }
 
             Section("Amount") {
-                TextField("Amount", value: $viewModel.amount, format: .number)
+                TextField("Amount", value: $viewModel.amount, format: .number.precision(.fractionLength(0...2)))
                     .keyboardType(.decimalPad)
                 Picker("Unit", selection: $viewModel.unit) {
                     ForEach(PortionUnit.imperialFirstCases) { unit in
@@ -54,8 +54,10 @@ struct FoodDetailView: View {
             }
         }
         .scrollContentBackground(.hidden)
+        .scrollDismissesKeyboard(.immediately)
         .background(BrandBackdrop())
         .navigationTitle(food.name)
+        .keyboardDoneToolbar()
         .sensoryFeedback(.success, trigger: viewModel.didLogSuccessfully)
         .onChange(of: viewModel.didLogSuccessfully) { _, newValue in
             if newValue { dismiss() }
@@ -68,6 +70,9 @@ struct FoodDetailView: View {
     }
 
     private func metricRow(_ title: String, value: Double, unit: String) -> some View {
-        LabeledContent(title, value: "\(Int(value.rounded())) \(unit)")
+        let formatted = unit == "kcal"
+            ? value.decimalString(maxFractionDigits: 0)
+            : value.decimalString(maxFractionDigits: 2)
+        return LabeledContent(title, value: "\(formatted) \(unit)")
     }
 }

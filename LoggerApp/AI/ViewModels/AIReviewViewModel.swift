@@ -42,15 +42,16 @@ final class AIReviewViewModel: ObservableObject {
             var resolved: [ResolvedCandidate] = []
             for item in response.items {
                 let results = try await foodRepository.search(query: item.name)
+                let preferred = preferredMatch(for: item, from: results)
                 resolved.append(
                     ResolvedCandidate(
                         candidate: item,
                         grams: UnitConverter.grams(
                             amount: item.estimatedPortion.amount,
                             unit: item.estimatedPortion.unit,
-                            defaultServingGrams: results.first?.defaultServingGrams ?? 100
+                            defaultServingGrams: preferred?.defaultServingGrams ?? results.first?.defaultServingGrams ?? 100
                         ),
-                        match: results.first
+                        match: preferred ?? results.first
                     )
                 )
             }
@@ -84,5 +85,15 @@ final class AIReviewViewModel: ObservableObject {
             errorMessage = error.localizedDescription
         }
     }
-}
 
+    private func preferredMatch(for item: AIFoodResponse.Item, from results: [FoodItem]) -> FoodItem? {
+        switch item.category {
+        case .generic:
+            return results.first(where: { $0.source == .generic || $0.source == .custom || $0.source == .recipe })
+        case .packaged:
+            return results.first(where: { $0.source == .off }) ?? results.first
+        case .recipe:
+            return results.first(where: { $0.source == .recipe || $0.source == .custom }) ?? results.first
+        }
+    }
+}

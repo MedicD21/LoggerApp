@@ -117,6 +117,33 @@ final class UserProfile {
         return NutritionMath.macroTargets(tdee: tdee, goal: goal)
     }
 
+    var smartCalculatedTargets: MacroTargets {
+        NutritionMath.macroTargets(tdee: tdeeValue, goal: goal)
+    }
+
+    var bmrValue: Double {
+        NutritionMath.bmr(
+            weightKg: weightKg,
+            heightCm: heightCm,
+            ageYears: ageYears,
+            sex: sex
+        )
+    }
+
+    var tdeeValue: Double {
+        NutritionMath.tdee(
+            bmr: bmrValue,
+            activityLevel: activityLevel
+        )
+    }
+
+    var usesCustomTargets: Bool {
+        customCalorieTarget != nil ||
+        customProteinTarget != nil ||
+        customCarbTarget != nil ||
+        customFatTarget != nil
+    }
+
     var weightPounds: Double {
         UnitConverter.pounds(fromKilograms: weightKg)
     }

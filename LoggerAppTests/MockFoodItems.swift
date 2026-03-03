@@ -31,6 +31,19 @@ enum MockFoodItems {
             sodiumMgPer100g: 74,
             defaultServingGrams: 120
         ),
+        GenericFoodSeed(
+            name: "Egg",
+            brand: nil,
+            barcode: nil,
+            category: "generic",
+            kcalPer100g: 143,
+            proteinPer100g: 12.6,
+            carbsPer100g: 0.7,
+            fatPer100g: 9.5,
+            fiberPer100g: 0,
+            sugarPer100g: 0.4,
+            sodiumMgPer100g: 140,
+            defaultServingGrams: 50
+        ),
     ]
 }
-

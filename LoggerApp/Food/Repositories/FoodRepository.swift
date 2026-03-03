@@ -47,25 +47,18 @@ final class FoodRepository: FoodRepositoryProtocol {
 
     func search(query: String) async throws -> [FoodItem] {
         let custom = try cachedCustomFoods(matching: query)
-        let route = Self.determineRoute(query: query, barcode: nil, genericDatabase: genericDatabase)
+        let generic = genericDatabase.search(query)
+        var packaged: [FoodItem] = []
 
-        switch route {
-        case .generic:
-            return merge(custom, genericDatabase.search(query))
-        case .packagedSearch:
-            do {
-                let items = try await offClient.searchByName(query)
-                try cache(items: items)
-                return merge(custom, items)
-            } catch {
-                logger.error("OFF search failed; using cache: \(String(describing: error), privacy: .public)")
-                return merge(custom, try cachedPackagedFoods(matching: query))
-            }
-        case .custom:
-            return custom
-        case .barcode:
-            return []
+        do {
+            packaged = try await offClient.searchByName(query)
+            try cache(items: packaged)
+        } catch {
+            logger.error("OFF search failed; using cache: \(String(describing: error), privacy: .public)")
+            packaged = try cachedPackagedFoods(matching: query)
         }
+
+        return merge(custom + generic, packaged)
     }
 
     func fetchByBarcode(_ barcode: String) async throws -> [FoodItem] {

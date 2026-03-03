@@ -11,7 +11,7 @@ struct OFFClient {
     }
 
     func fetchByBarcode(_ barcode: String) async throws -> [FoodItem] {
-        guard let url = URL(string: "https://world.openfoodfacts.org/api/v2/product/\(barcode).json?fields=code,product_name,brands,serving_quantity,serving_size,nutriments") else {
+        guard let url = URL(string: "https://world.openfoodfacts.org/api/v2/product/\(barcode).json?fields=code,product_name,brands,serving_quantity,serving_size,nutrition_data_per,nutriments") else {
             return []
         }
 
@@ -41,7 +41,7 @@ struct OFFClient {
             URLQueryItem(name: "search_simple", value: "1"),
             URLQueryItem(name: "json", value: "1"),
             URLQueryItem(name: "page_size", value: "20"),
-            URLQueryItem(name: "fields", value: "code,product_name,brands,serving_quantity,serving_size,nutriments"),
+            URLQueryItem(name: "fields", value: "code,product_name,brands,serving_quantity,serving_size,nutrition_data_per,nutriments"),
         ]
 
         guard let url = components.url else { return [] }
@@ -83,44 +83,104 @@ struct OFFProduct: Decodable {
     let brands: String?
     let servingQuantity: Double?
     let servingSize: String?
+    let nutritionDataPer: String?
     let nutriments: OFFNutriments
 
-    enum CodingKeys: String, CodingKey {
-        case code
-        case productName = "product_name"
-        case brands
-        case servingQuantity = "serving_quantity"
-        case servingSize = "serving_size"
-        case nutriments
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: DynamicKey.self)
+        self.code = container.decodeFlexibleString(forKey: "code")
+        self.productName = container.decodeFlexibleString(forKey: "product_name")
+        self.brands = container.decodeFlexibleString(forKey: "brands")
+        self.servingQuantity = container.decodeFlexibleDouble(forKey: "serving_quantity")
+        self.servingSize = container.decodeFlexibleString(forKey: "serving_size")
+        self.nutritionDataPer = container.decodeFlexibleString(forKey: "nutrition_data_per")
+
+        if let nutrimentsKey = DynamicKey(stringValue: "nutriments"),
+           let decoded = try? container.decode(OFFNutriments.self, forKey: nutrimentsKey) {
+            self.nutriments = decoded
+        } else {
+            self.nutriments = OFFNutriments()
+        }
     }
 }
 
 struct OFFNutriments: Decodable {
+    let kcal: Double?
     let kcal100g: Double?
     let kcalServing: Double?
+    let proteins: Double?
     let proteins100g: Double?
     let proteinsServing: Double?
+    let carbohydrates: Double?
     let carbohydrates100g: Double?
     let carbohydratesServing: Double?
+    let fat: Double?
     let fat100g: Double?
     let fatServing: Double?
+    let fiber: Double?
     let fiber100g: Double?
+    let fiberServing: Double?
+    let sugars: Double?
     let sugars100g: Double?
+    let sugarsServing: Double?
+    let sodium: Double?
     let sodium100g: Double?
+    let sodiumServing: Double?
+
+    init() {
+        self.kcal = nil
+        self.kcal100g = nil
+        self.kcalServing = nil
+        self.proteins = nil
+        self.proteins100g = nil
+        self.proteinsServing = nil
+        self.carbohydrates = nil
+        self.carbohydrates100g = nil
+        self.carbohydratesServing = nil
+        self.fat = nil
+        self.fat100g = nil
+        self.fatServing = nil
+        self.fiber = nil
+        self.fiber100g = nil
+        self.fiberServing = nil
+        self.sugars = nil
+        self.sugars100g = nil
+        self.sugarsServing = nil
+        self.sodium = nil
+        self.sodium100g = nil
+        self.sodiumServing = nil
+    }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: DynamicKey.self)
+        self.kcal = container.decodeFlexibleDouble(forKey: "energy-kcal")
+            ?? container.decodeFlexibleDouble(forKey: "energy-kcal_value")
         self.kcal100g = container.decodeFlexibleDouble(forKey: "energy-kcal_100g")
         self.kcalServing = container.decodeFlexibleDouble(forKey: "energy-kcal_serving")
+        self.proteins = container.decodeFlexibleDouble(forKey: "proteins")
+            ?? container.decodeFlexibleDouble(forKey: "proteins_value")
         self.proteins100g = container.decodeFlexibleDouble(forKey: "proteins_100g")
         self.proteinsServing = container.decodeFlexibleDouble(forKey: "proteins_serving")
+        self.carbohydrates = container.decodeFlexibleDouble(forKey: "carbohydrates")
+            ?? container.decodeFlexibleDouble(forKey: "carbohydrates_value")
         self.carbohydrates100g = container.decodeFlexibleDouble(forKey: "carbohydrates_100g")
         self.carbohydratesServing = container.decodeFlexibleDouble(forKey: "carbohydrates_serving")
+        self.fat = container.decodeFlexibleDouble(forKey: "fat")
+            ?? container.decodeFlexibleDouble(forKey: "fat_value")
         self.fat100g = container.decodeFlexibleDouble(forKey: "fat_100g")
         self.fatServing = container.decodeFlexibleDouble(forKey: "fat_serving")
+        self.fiber = container.decodeFlexibleDouble(forKey: "fiber")
+            ?? container.decodeFlexibleDouble(forKey: "fiber_value")
         self.fiber100g = container.decodeFlexibleDouble(forKey: "fiber_100g")
+        self.fiberServing = container.decodeFlexibleDouble(forKey: "fiber_serving")
+        self.sugars = container.decodeFlexibleDouble(forKey: "sugars")
+            ?? container.decodeFlexibleDouble(forKey: "sugars_value")
         self.sugars100g = container.decodeFlexibleDouble(forKey: "sugars_100g")
+        self.sugarsServing = container.decodeFlexibleDouble(forKey: "sugars_serving")
+        self.sodium = container.decodeFlexibleDouble(forKey: "sodium")
+            ?? container.decodeFlexibleDouble(forKey: "sodium_value")
         self.sodium100g = container.decodeFlexibleDouble(forKey: "sodium_100g")
+        self.sodiumServing = container.decodeFlexibleDouble(forKey: "sodium_serving")
     }
 }
 
@@ -153,5 +213,18 @@ private extension KeyedDecodingContainer where Key == DynamicKey {
         }
         return nil
     }
-}
 
+    func decodeFlexibleString(forKey key: String) -> String? {
+        guard let codingKey = DynamicKey(stringValue: key) else { return nil }
+        if let value = try? decode(String.self, forKey: codingKey) {
+            return value
+        }
+        if let value = try? decode(Double.self, forKey: codingKey) {
+            return String(value)
+        }
+        if let value = try? decode(Int.self, forKey: codingKey) {
+            return String(value)
+        }
+        return nil
+    }
+}

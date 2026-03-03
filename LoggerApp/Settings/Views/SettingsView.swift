@@ -16,21 +16,67 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
-            Section("Macro Targets") {
-                TextField("Calories", value: $profile.customCalorieTarget, format: .number)
-                    .keyboardType(.numberPad)
-                TextField("Protein (g)", value: $profile.customProteinTarget, format: .number)
+            Section("Smart Calculator Inputs") {
+                TextField("Weight (lb)", value: weightPoundsBinding, format: .number.precision(.fractionLength(0...2)))
                     .keyboardType(.decimalPad)
-                TextField("Carbs (g)", value: $profile.customCarbTarget, format: .number)
-                    .keyboardType(.decimalPad)
-                TextField("Fat (g)", value: $profile.customFatTarget, format: .number)
-                    .keyboardType(.decimalPad)
-                Button("Use Smart Calculator") {
+
+                HStack {
+                    TextField("Height (ft)", value: heightFeetBinding, format: .number)
+                        .keyboardType(.numberPad)
+                    TextField("Height (in)", value: heightInchesBinding, format: .number)
+                        .keyboardType(.numberPad)
+                }
+
+                Stepper("Age: \(profile.ageYears)", value: $profile.ageYears, in: 18...100)
+
+                Picker("Sex", selection: sexBinding) {
+                    ForEach(BiologicalSex.allCases) { sex in
+                        Text(sex.rawValue.capitalized).tag(sex)
+                    }
+                }
+
+                Picker("Activity", selection: activityLevelBinding) {
+                    ForEach(ActivityLevel.allCases) { level in
+                        Text(level.title).tag(level)
+                    }
+                }
+
+                Picker("Goal", selection: goalBinding) {
+                    ForEach(NutritionGoal.allCases) { goal in
+                        Text(goal.rawValue.capitalized).tag(goal)
+                    }
+                }
+            }
+
+            Section("Smart Calculator") {
+                LabeledContent("BMR", value: "\(Int(profile.bmrValue.rounded())) kcal")
+                LabeledContent("TDEE", value: "\(Int(profile.tdeeValue.rounded())) kcal")
+                LabeledContent("Calories", value: "\(Int(profile.smartCalculatedTargets.calories.rounded()))")
+                LabeledContent("Protein", value: "\(Int(profile.smartCalculatedTargets.proteinGrams.rounded())) g")
+                LabeledContent("Carbs", value: "\(Int(profile.smartCalculatedTargets.carbGrams.rounded())) g")
+                LabeledContent("Fat", value: "\(Int(profile.smartCalculatedTargets.fatGrams.rounded())) g")
+
+                Button(profile.usesCustomTargets ? "Use Smart Calculator Targets" : "Smart Calculator Active") {
                     profile.customCalorieTarget = nil
                     profile.customProteinTarget = nil
                     profile.customCarbTarget = nil
                     profile.customFatTarget = nil
                 }
+                .disabled(!profile.usesCustomTargets)
+            }
+
+            Section("Custom Macro Overrides") {
+                TextField("Calories", value: $profile.customCalorieTarget, format: .number.precision(.fractionLength(0...2)))
+                    .keyboardType(.numberPad)
+                TextField("Protein (g)", value: $profile.customProteinTarget, format: .number.precision(.fractionLength(0...2)))
+                    .keyboardType(.decimalPad)
+                TextField("Carbs (g)", value: $profile.customCarbTarget, format: .number.precision(.fractionLength(0...2)))
+                    .keyboardType(.decimalPad)
+                TextField("Fat (g)", value: $profile.customFatTarget, format: .number.precision(.fractionLength(0...2)))
+                    .keyboardType(.decimalPad)
+                Text("Leave these blank to use the smart calculator. Enter all four to override it.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
             }
 
             Section("Privacy") {
@@ -90,8 +136,10 @@ struct SettingsView: View {
             }
         }
         .scrollContentBackground(.hidden)
+        .scrollDismissesKeyboard(.immediately)
         .background(BrandBackdrop())
         .navigationTitle("Settings")
+        .keyboardDoneToolbar()
         .onDisappear {
             profile.updatedAt = .now
             container.save()
@@ -109,5 +157,54 @@ struct SettingsView: View {
         } message: {
             Text(viewModel.errorMessage ?? "")
         }
+    }
+
+    private var weightPoundsBinding: Binding<Double> {
+        Binding(
+            get: { profile.weightPounds },
+            set: { profile.weightKg = UnitConverter.kilograms(fromPounds: max(0, $0)) }
+        )
+    }
+
+    private var heightFeetBinding: Binding<Int> {
+        Binding(
+            get: { profile.heightFeetAndInches.feet },
+            set: { newFeet in
+                let inches = profile.heightFeetAndInches.inches
+                profile.heightCm = UnitConverter.centimeters(feet: max(0, newFeet), inches: inches)
+            }
+        )
+    }
+
+    private var heightInchesBinding: Binding<Int> {
+        Binding(
+            get: { profile.heightFeetAndInches.inches },
+            set: { newInches in
+                let normalizedFeet = profile.heightFeetAndInches.feet + max(0, newInches) / 12
+                let normalizedInches = max(0, newInches) % 12
+                profile.heightCm = UnitConverter.centimeters(feet: normalizedFeet, inches: normalizedInches)
+            }
+        )
+    }
+
+    private var sexBinding: Binding<BiologicalSex> {
+        Binding(
+            get: { profile.sex },
+            set: { profile.sex = $0 }
+        )
+    }
+
+    private var activityLevelBinding: Binding<ActivityLevel> {
+        Binding(
+            get: { profile.activityLevel },
+            set: { profile.activityLevel = $0 }
+        )
+    }
+
+    private var goalBinding: Binding<NutritionGoal> {
+        Binding(
+            get: { profile.goal },
+            set: { profile.goal = $0 }
+        )
     }
 }

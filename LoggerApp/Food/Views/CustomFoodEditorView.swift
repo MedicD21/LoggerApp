@@ -37,7 +37,7 @@ struct CustomFoodEditorView: View {
             }
 
             Section("Serving") {
-                TextField("Default serving (oz)", value: $servingOunces, format: .number)
+                TextField("Default serving (oz)", value: $servingOunces, format: .number.precision(.fractionLength(0...2)))
                     .keyboardType(.decimalPad)
                 TextField("Notes", text: $notes, axis: .vertical)
             }
@@ -50,7 +50,9 @@ struct CustomFoodEditorView: View {
                 .frame(maxWidth: .infinity)
             }
         }
+        .scrollDismissesKeyboard(.immediately)
         .navigationTitle("Custom Food")
+        .keyboardDoneToolbar()
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Close") { dismiss() }
@@ -64,7 +66,7 @@ struct CustomFoodEditorView: View {
     }
 
     private func nutrientField(_ title: String, value: Binding<Double>) -> some View {
-        TextField(title, value: value, format: .number)
+        TextField(title, value: value, format: .number.precision(.fractionLength(0...2)))
             .keyboardType(.decimalPad)
     }
 
