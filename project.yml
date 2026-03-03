@@ -1,4 +1,4 @@
-name: LoggerApp
+name: Log_The_Food_Dushin
 options:
   bundleIdPrefix: com.dustinschaaf
   deploymentTarget:
@@ -9,7 +9,7 @@ settings:
     MARKETING_VERSION: 1.0
     SWIFT_VERSION: 6.0
     GENERATE_INFOPLIST_FILE: YES
-    INFOPLIST_KEY_CFBundleDisplayName: LoggerApp
+    INFOPLIST_KEY_CFBundleDisplayName: Log The Food Dushin
     INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.healthcare-fitness
     INFOPLIST_KEY_NSCameraUsageDescription: Capture meals and scan barcodes for food logging.
     INFOPLIST_KEY_NSPhotoLibraryUsageDescription: Import meal photos for AI-assisted food logging.
@@ -32,8 +32,8 @@ targets:
         buildPhase: resources
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.dustinschaaf.LoggerApp
-        PRODUCT_NAME: LoggerApp
+        PRODUCT_BUNDLE_IDENTIFIER: com.dustinschaaf.Log_The_Food_Dushin
+        PRODUCT_NAME: Log The Food Dushin
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         CODE_SIGN_STYLE: Automatic
         SUPPORTS_MACCATALYST: NO
@@ -54,6 +54,6 @@ targets:
       - target: LoggerApp
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.dustinschaaf.LoggerAppTests
-        TEST_HOST: $(BUILT_PRODUCTS_DIR)/LoggerApp.app/LoggerApp
+        PRODUCT_BUNDLE_IDENTIFIER: com.dustinschaaf.Log_The_Food_DushinTests
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/Log_The_Food_Dushin.app/Log_The_Food_Dushin
         BUNDLE_LOADER: $(TEST_HOST)
