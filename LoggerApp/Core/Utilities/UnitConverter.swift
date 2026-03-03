@@ -31,13 +31,10 @@ enum UnitConverter {
 
     static func displayWeight(_ grams: Double) -> String {
         if grams >= gramsPerPound {
-            return String(format: "%.2f lb", grams / gramsPerPound)
+            return "\( (grams / gramsPerPound).decimalString(maxFractionDigits: 2) ) lb"
         }
         let ounces = grams / gramsPerOunce
-        if ounces >= 1 {
-            return String(format: "%.1f oz", ounces)
-        }
-        return String(format: "%.1f oz", ounces)
+        return "\(ounces.decimalString(maxFractionDigits: 2)) oz"
     }
 
     static func ounces(fromGrams grams: Double) -> Double {

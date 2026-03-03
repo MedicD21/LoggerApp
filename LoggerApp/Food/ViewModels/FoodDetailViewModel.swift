@@ -15,7 +15,7 @@ final class FoodDetailViewModel: ObservableObject {
     init(food: FoodItem, repository: LogRepositoryProtocol) {
         self.food = food
         self.repository = repository
-        self.amount = UnitConverter.ounces(fromGrams: food.defaultServingGrams)
+        self.amount = UnitConverter.ounces(fromGrams: food.defaultServingGrams).rounded(toPlaces: 2)
     }
 
     var grams: Double {

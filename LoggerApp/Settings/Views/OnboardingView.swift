@@ -35,7 +35,7 @@ struct OnboardingView: View {
 
                 Form {
                     Section("Profile") {
-                        TextField("Weight (lb)", value: $weightPounds, format: .number)
+                        TextField("Weight (lb)", value: $weightPounds, format: .number.precision(.fractionLength(0...2)))
                             .keyboardType(.decimalPad)
                         HStack {
                             TextField("Height (ft)", value: $heightFeet, format: .number)
@@ -62,6 +62,7 @@ struct OnboardingView: View {
                     }
                 }
                 .scrollContentBackground(.hidden)
+                .scrollDismissesKeyboard(.immediately)
                 .background(Color.clear)
                 .frame(maxHeight: 380)
                 .brandPanel(cornerRadius: 28)
@@ -84,6 +85,7 @@ struct OnboardingView: View {
             }
             .padding(24)
             .background(BrandBackdrop())
+            .keyboardDoneToolbar()
         }
     }
 }

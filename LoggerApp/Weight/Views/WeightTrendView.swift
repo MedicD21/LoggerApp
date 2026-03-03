@@ -57,7 +57,7 @@ struct WeightTrendView: View {
                 }
 
                 Button("Add Weight Entry") {
-                    entryValue = profile.weightKg * 2.20462
+                    entryValue = UnitConverter.pounds(fromKilograms: profile.weightKg).rounded(toPlaces: 2)
                     showAddEntry = true
                 }
                 .buttonStyle(.borderedProminent)
@@ -84,6 +84,7 @@ struct WeightTrendView: View {
             }
             .padding(20)
         }
+        .scrollDismissesKeyboard(.immediately)
         .background(BrandBackdrop())
         .navigationTitle("Trends")
         .task { viewModel.load() }
@@ -91,7 +92,7 @@ struct WeightTrendView: View {
             NavigationStack {
                 Form {
                     Section("Weight") {
-                        TextField("Weight (lb)", value: $entryValue, format: .number)
+                        TextField("Weight (lb)", value: $entryValue, format: .number.precision(.fractionLength(0...2)))
                             .keyboardType(.decimalPad)
                     }
 
@@ -105,8 +106,10 @@ struct WeightTrendView: View {
                     }
                 }
                 .scrollContentBackground(.hidden)
+                .scrollDismissesKeyboard(.immediately)
                 .background(BrandBackdrop())
                 .navigationTitle("Add Weight")
+                .keyboardDoneToolbar()
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button("Close") { showAddEntry = false }

@@ -1,4 +1,7 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
 
 struct BrandBackdrop: View {
     var body: some View {
@@ -72,5 +75,29 @@ extension View {
                 }
                 .shadow(color: Color.brandShadow, radius: 26, x: 0, y: 16)
         )
+    }
+
+    func keyboardDoneToolbar() -> some View {
+        modifier(KeyboardDoneToolbarModifier())
+    }
+}
+
+private struct KeyboardDoneToolbarModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content.toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") {
+                    dismissKeyboard()
+                }
+                .fontWeight(.semibold)
+            }
+        }
+    }
+
+    private func dismissKeyboard() {
+        #if canImport(UIKit)
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        #endif
     }
 }

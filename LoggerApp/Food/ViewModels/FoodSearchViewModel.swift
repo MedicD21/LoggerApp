@@ -7,6 +7,7 @@ final class FoodSearchViewModel: ObservableObject {
     @Published private(set) var recentFoods: [FoodItem] = []
     @Published var isSearching = false
     @Published var errorMessage: String?
+    @Published private(set) var hasSearched = false
 
     private let repository: FoodRepositoryProtocol
 
@@ -26,9 +27,11 @@ final class FoodSearchViewModel: ObservableObject {
         let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else {
             results = []
+            hasSearched = false
             return
         }
 
+        hasSearched = true
         isSearching = true
         defer { isSearching = false }
 
@@ -40,6 +43,7 @@ final class FoodSearchViewModel: ObservableObject {
     }
 
     func searchBarcode(_ code: String) async {
+        hasSearched = true
         isSearching = true
         defer { isSearching = false }
 
@@ -50,4 +54,3 @@ final class FoodSearchViewModel: ObservableObject {
         }
     }
 }
-

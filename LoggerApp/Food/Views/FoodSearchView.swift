@@ -68,6 +68,11 @@ struct FoodSearchView: View {
                         }
                     }
                 }
+            } else if viewModel.hasSearched && !viewModel.isSearching {
+                Section("Results") {
+                    Text("No foods matched your search. Try a brand name, barcode, or a simpler generic food.")
+                        .foregroundStyle(.secondary)
+                }
             } else {
                 Section("Recent") {
                     if viewModel.recentFoods.isEmpty {
@@ -130,8 +135,11 @@ struct FoodSearchView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(item.displayName)
                     .font(.subheadline.weight(.semibold))
-                Text("\(item.category.rawValue.capitalized) • \(UnitConverter.caloriesPerThreePointFiveOunces(kcalPer100g: item.kcalPer100g)) kcal / 3.5 oz")
+                Text("\(item.category.rawValue.capitalized) • \(item.nutrition(for: item.defaultServingGrams).calories.decimalString(maxFractionDigits: 0)) kcal / \(UnitConverter.displayWeight(item.defaultServingGrams))")
                     .font(.caption)
+                    .foregroundStyle(.secondary)
+                Text(macroSummary(for: item))
+                    .font(.caption2)
                     .foregroundStyle(.secondary)
             }
             Spacer()
@@ -140,5 +148,10 @@ struct FoodSearchView: View {
                     .foregroundStyle(.secondary)
             }
         }
+    }
+
+    private func macroSummary(for item: FoodItem) -> String {
+        let nutrition = item.nutrition(for: item.defaultServingGrams)
+        return "P \(nutrition.protein.decimalString())g • C \(nutrition.carbs.decimalString())g • F \(nutrition.fat.decimalString())g"
     }
 }
