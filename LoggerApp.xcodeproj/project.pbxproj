@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -97,7 +97,7 @@
 		1AA43B0F0894C4E8CDCEA0F6 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		1BF4D94F311D9A64F51F3D9E /* Date+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Helpers.swift"; sourceTree = "<group>"; };
 		1F0B0EBFF2474C8D0663A94B /* Color+Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Brand.swift"; sourceTree = "<group>"; };
-		20645E49E409D95E6B93F717 /* LoggerApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LoggerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		20645E49E409D95E6B93F717 /* LoggerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoggerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25EEDC73310610B4F4399E32 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		2E703384CAFF3EA6F072462C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3487F6C6AA67729DAC6C7479 /* MedicationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationModels.swift; sourceTree = "<group>"; };
@@ -618,7 +618,6 @@
 			);
 			mainGroup = 1306EDE2BB5AB8F382D721D0;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -928,9 +927,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = LoggerApp/LoggerApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 286LKF859M;
 				ENABLE_PREVIEWS = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = LoggerApp;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Capture meals and scan barcodes for food logging.";
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "App Read and Write to health records";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Optional Apple Health weight sync is available when you enable it.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Optional Apple Health weight sync can write confirmed weight entries.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Save exported nutrition data files.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Import meal photos for AI-assisted food logging.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -939,7 +951,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dustinschaaf.LoggerApp;
 				PRODUCT_NAME = LoggerApp;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -949,9 +964,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = LoggerApp/LoggerApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 286LKF859M;
 				ENABLE_PREVIEWS = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = LoggerApp;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Capture meals and scan barcodes for food logging.";
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "App Read and Write to health records";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Optional Apple Health weight sync is available when you enable it.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Optional Apple Health weight sync can write confirmed weight entries.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Save exported nutrition data files.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Import meal photos for AI-assisted food logging.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -960,7 +988,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dustinschaaf.LoggerApp;
 				PRODUCT_NAME = LoggerApp;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

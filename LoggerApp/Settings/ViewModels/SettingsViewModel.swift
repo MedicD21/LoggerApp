@@ -37,17 +37,25 @@ final class SettingsViewModel: ObservableObject {
         goal: NutritionGoal
     ) {
         let descriptor = FetchDescriptor<UserProfile>()
-        let profile = (try? container.modelContext.fetch(descriptor).first) ?? UserProfile()
-        profile.onboardingCompleted = true
-        profile.weightKg = weightKg
-        profile.heightCm = heightCm
-        profile.ageYears = ageYears
-        profile.sex = sex
-        profile.activityLevel = activityLevel
-        profile.goal = goal
-        profile.updatedAt = .now
-
-        if container.modelContext.model(for: profile.persistentModelID) == nil {
+        if let profile = try? container.modelContext.fetch(descriptor).first {
+            profile.onboardingCompleted = true
+            profile.weightKg = weightKg
+            profile.heightCm = heightCm
+            profile.ageYears = ageYears
+            profile.sex = sex
+            profile.activityLevel = activityLevel
+            profile.goal = goal
+            profile.updatedAt = .now
+        } else {
+            let profile = UserProfile(
+                onboardingCompleted: true,
+                weightKg: weightKg,
+                heightCm: heightCm,
+                ageYears: ageYears,
+                sex: sex,
+                activityLevel: activityLevel,
+                goal: goal
+            )
             container.modelContext.insert(profile)
         }
 

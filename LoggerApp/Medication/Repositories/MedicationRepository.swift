@@ -26,12 +26,31 @@ final class MedicationRepository: MedicationRepositoryProtocol {
             current.isActive = false
         }
 
-        if modelContext.model(for: schedule.persistentModelID) == nil {
+        let scheduleID = schedule.id
+        let descriptor = FetchDescriptor<MedicationSchedule>(
+            predicate: #Predicate { existing in
+                existing.id == scheduleID
+            }
+        )
+
+        if let existing = try modelContext.fetch(descriptor).first {
+            existing.medicationName = schedule.medicationName
+            existing.doseDisplay = schedule.doseDisplay
+            existing.frequencyType = schedule.frequencyType
+            existing.customIntervalDays = schedule.customIntervalDays
+            existing.siteRotation = schedule.siteRotation
+            existing.nextDueDate = schedule.nextDueDate
+            existing.refillReminderDaysAhead = schedule.refillReminderDaysAhead
+            existing.remainingDoses = schedule.remainingDoses
+            existing.refillReminderThreshold = schedule.refillReminderThreshold
+            existing.isActive = schedule.isActive
+        } else {
             modelContext.insert(schedule)
         }
 
         try modelContext.save()
-        let snapshot = MedicationReminderSnapshot(schedule: schedule)
+        let persistedSchedule = try currentSchedule() ?? schedule
+        let snapshot = MedicationReminderSnapshot(schedule: persistedSchedule)
         Task { @MainActor in
             await notificationManager.scheduleMedicationNotifications(for: snapshot)
         }
