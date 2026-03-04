@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0093D62D1A5FC5C9B9FE9C1F /* AIInsightsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EFAC4881996DCCA09D4912 /* AIInsightsResponse.swift */; };
 		035A9378E8555FAF6D8FA2DA /* BrandMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6186CA0DDB638ADF64FBF1F /* BrandMarkView.swift */; };
 		048AA99F21FD8639CC0C199D /* MacroCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C26DB53708686996AB3986 /* MacroCalculatorTests.swift */; };
 		0B83534FCDAC6780EB2D31DE /* WeightTrendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66990C2DAB2D2DABAE43CA54 /* WeightTrendView.swift */; };
@@ -35,6 +36,7 @@
 		77D698EBF76FFFEFE983CF4C /* SharedTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69312B08E9D3182B1D0EF5D5 /* SharedTypes.swift */; };
 		825241E6F2454EC12EE3B9E9 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C49CAB934923A825BB074C /* HomeView.swift */; };
 		837CBC899D51B122ECA02547 /* NutritionMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B616D22A16ED57EF4D56EDBF /* NutritionMathTests.swift */; };
+		8A289A2DD46EB95ED691A5E5 /* USDAClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E0967A210C49E2532CF427 /* USDAClient.swift */; };
 		8DCAF5954D64DAE68A4D87EC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C65FBDFF56545FBD8BFF7C2F /* LaunchScreen.storyboard */; };
 		8EE2D195C30532E776A1BEAC /* OFFResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036095ADC2D77CA9530C7661 /* OFFResponseParser.swift */; };
 		8EEDC591BA5EC64C24DB4101 /* FoodSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F5853F01C34DD0DA6A67DC /* FoodSearchView.swift */; };
@@ -65,6 +67,7 @@
 		E98D99BF9308FC3F914B1C4D /* AIRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B19C85C66D3C57A626FC949 /* AIRepository.swift */; };
 		EA237CF32C4FEC8864002411 /* generic_foods.json in Resources */ = {isa = PBXBuildFile; fileRef = B49C25CED9DDA466637F438C /* generic_foods.json */; };
 		F42369F31873225CE4FF51FC /* FoodLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A1C47B60F92BE5E5330C93 /* FoodLog.swift */; };
+		F4815597469205F6E3A52835 /* USDAParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4AA5B926E33DAEF76EAB07 /* USDAParsingTests.swift */; };
 		F833F66A9D09F74031889280 /* MedicationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27F07034B14DACBA7324BC1 /* MedicationRepository.swift */; };
 		FCB8EA18708F1EC8AF406378 /* MockFoodItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA5C5094E669B89A13A0E46 /* MockFoodItems.swift */; };
 		FD567ED768C36E5235F28CB4 /* Date+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF4D94F311D9A64F51F3D9E /* Date+Helpers.swift */; };
@@ -97,13 +100,14 @@
 		1AA43B0F0894C4E8CDCEA0F6 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		1BF4D94F311D9A64F51F3D9E /* Date+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Helpers.swift"; sourceTree = "<group>"; };
 		1F0B0EBFF2474C8D0663A94B /* Color+Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Brand.swift"; sourceTree = "<group>"; };
-		20645E49E409D95E6B93F717 /* LoggerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoggerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		20645E49E409D95E6B93F717 /* Log The Food Dushin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Log The Food Dushin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		25EEDC73310610B4F4399E32 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		2E703384CAFF3EA6F072462C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3487F6C6AA67729DAC6C7479 /* MedicationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationModels.swift; sourceTree = "<group>"; };
 		37344A545D85353673EFEC24 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
 		38BDAF16FF543F9B4F252BEB /* UnitConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitConverter.swift; sourceTree = "<group>"; };
 		44130A3C00919966DD9E9635 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		45EFAC4881996DCCA09D4912 /* AIInsightsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIInsightsResponse.swift; sourceTree = "<group>"; };
 		494D32A0F8E9ED8F2A3F83C5 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		4D1C612923A463CDB2823CE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		51D06504E68A1A0AD7036BF9 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
@@ -118,6 +122,7 @@
 		69F5853F01C34DD0DA6A67DC /* FoodSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodSearchView.swift; sourceTree = "<group>"; };
 		6CA5C5094E669B89A13A0E46 /* MockFoodItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFoodItems.swift; sourceTree = "<group>"; };
 		6CC8E66EB81B886192C89604 /* FoodItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItem.swift; sourceTree = "<group>"; };
+		6D4AA5B926E33DAEF76EAB07 /* USDAParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USDAParsingTests.swift; sourceTree = "<group>"; };
 		77BA814DC09A00DE934A28B0 /* RepositoryProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryProtocols.swift; sourceTree = "<group>"; };
 		797638C142951493AF8E39B9 /* View+BrandTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+BrandTheme.swift"; sourceTree = "<group>"; };
 		884A3926105FCF62CBEF9E82 /* AnthropicClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnthropicClient.swift; sourceTree = "<group>"; };
@@ -131,7 +136,7 @@
 		A113F1AA023452D210F1A7C1 /* WeightViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightViewModel.swift; sourceTree = "<group>"; };
 		AD4050285731103FE0685BF1 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		AEA6EED028A5381D2034EB9F /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
-		B015EC77D16689F142DAA23F /* LoggerAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = LoggerAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B015EC77D16689F142DAA23F /* LoggerAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LoggerAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B03793E7253F6EABA78F770B /* AIReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIReviewViewModel.swift; sourceTree = "<group>"; };
 		B49C25CED9DDA466637F438C /* generic_foods.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = generic_foods.json; sourceTree = "<group>"; };
 		B616D22A16ED57EF4D56EDBF /* NutritionMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionMathTests.swift; sourceTree = "<group>"; };
@@ -140,6 +145,7 @@
 		D0C26DB53708686996AB3986 /* MacroCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroCalculatorTests.swift; sourceTree = "<group>"; };
 		D48CF94E4006C503E76993EF /* WeightRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightRepository.swift; sourceTree = "<group>"; };
 		D687CB87E25E2824B61C85D1 /* String+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Helpers.swift"; sourceTree = "<group>"; };
+		D7E0967A210C49E2532CF427 /* USDAClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USDAClient.swift; sourceTree = "<group>"; };
 		DDC7270677E002F24B139FCB /* GLP1TrackerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLP1TrackerView.swift; sourceTree = "<group>"; };
 		DEF0C044EAFAD8C852195227 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E27F07034B14DACBA7324BC1 /* MedicationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationRepository.swift; sourceTree = "<group>"; };
@@ -273,6 +279,7 @@
 			children = (
 				8C4DEA045D71F4E551E5AEF4 /* OFFClient.swift */,
 				036095ADC2D77CA9530C7661 /* OFFResponseParser.swift */,
+				D7E0967A210C49E2532CF427 /* USDAClient.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -447,6 +454,7 @@
 				D0C26DB53708686996AB3986 /* MacroCalculatorTests.swift */,
 				6CA5C5094E669B89A13A0E46 /* MockFoodItems.swift */,
 				B616D22A16ED57EF4D56EDBF /* NutritionMathTests.swift */,
+				6D4AA5B926E33DAEF76EAB07 /* USDAParsingTests.swift */,
 			);
 			path = LoggerAppTests;
 			sourceTree = "<group>";
@@ -483,6 +491,7 @@
 			isa = PBXGroup;
 			children = (
 				A050AFD40E6E56DA396B20F5 /* AIFoodResponse.swift */,
+				45EFAC4881996DCCA09D4912 /* AIInsightsResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -540,7 +549,7 @@
 		EC05CEEA84003C8306B8EE65 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				20645E49E409D95E6B93F717 /* LoggerApp.app */,
+				20645E49E409D95E6B93F717 /* Log The Food Dushin.app */,
 				B015EC77D16689F142DAA23F /* LoggerAppTests.xctest */,
 			);
 			name = Products;
@@ -572,7 +581,7 @@
 			packageProductDependencies = (
 			);
 			productName = LoggerApp;
-			productReference = 20645E49E409D95E6B93F717 /* LoggerApp.app */;
+			productReference = 20645E49E409D95E6B93F717 /* Log The Food Dushin.app */;
 			productType = "com.apple.product-type.application";
 		};
 		4B1B56183507EE761128792E /* LoggerAppTests */ = {
@@ -601,7 +610,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 2630;
 				TargetAttributes = {
 					34999A039687AC79E984099E = {
 						ProvisioningStyle = Automatic;
@@ -654,6 +663,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE762FEAF68C20A2906A6D0B /* AIFoodResponse.swift in Sources */,
+				0093D62D1A5FC5C9B9FE9C1F /* AIInsightsResponse.swift in Sources */,
 				E98D99BF9308FC3F914B1C4D /* AIRepository.swift in Sources */,
 				C07D2E3B4CF607FF92C29B4A /* AIReviewViewModel.swift in Sources */,
 				3D6339ACF38027AD6EA80E42 /* AnthropicClient.swift in Sources */,
@@ -700,6 +710,7 @@
 				A3042C2D8010EAC5A6F4A7B5 /* SettingsViewModel.swift in Sources */,
 				77D698EBF76FFFEFE983CF4C /* SharedTypes.swift in Sources */,
 				97BBE6408CE5E3DB732DE38D /* String+Helpers.swift in Sources */,
+				8A289A2DD46EB95ED691A5E5 /* USDAClient.swift in Sources */,
 				6AE19AEDB42AECAB13C383DE /* UnitConverter.swift in Sources */,
 				601ECC5D7CD59908977E31B0 /* UserProfile.swift in Sources */,
 				9E5CF945A58F6252CCAF1E85 /* View+BrandTheme.swift in Sources */,
@@ -719,6 +730,7 @@
 				048AA99F21FD8639CC0C199D /* MacroCalculatorTests.swift in Sources */,
 				FCB8EA18708F1EC8AF406378 /* MockFoodItems.swift in Sources */,
 				837CBC899D51B122ECA02547 /* NutritionMathTests.swift in Sources */,
+				F4815597469205F6E3A52835 /* USDAParsingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -754,10 +766,10 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.dustinschaaf.LoggerAppTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dustinschaaf.LogTheFoodDushinTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoggerApp.app/LoggerApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Log The Food Dushin.app/Log The Food Dushin";
 			};
 			name = Debug;
 		};
@@ -799,6 +811,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -808,7 +821,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = LoggerApp;
+				INFOPLIST_KEY_CFBundleDisplayName = "Log The Food Dushin";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Capture meals and scan barcodes for food logging.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Optional Apple Health weight sync is available when you enable it.";
@@ -824,6 +837,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 6.0;
@@ -840,10 +854,10 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.dustinschaaf.LoggerAppTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dustinschaaf.LogTheFoodDushinTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoggerApp.app/LoggerApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Log The Food Dushin.app/Log The Food Dushin";
 			};
 			name = Release;
 		};
@@ -885,6 +899,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -900,7 +915,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = LoggerApp;
+				INFOPLIST_KEY_CFBundleDisplayName = "Log The Food Dushin";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Capture meals and scan barcodes for food logging.";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Optional Apple Health weight sync is available when you enable it.";
@@ -917,6 +932,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
@@ -927,37 +943,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = LoggerApp/LoggerApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 286LKF859M;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Log_The_Food_Dushin;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Capture meals and scan barcodes for food logging.";
-				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "App Read and Write to health records";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "Optional Apple Health weight sync is available when you enable it.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Optional Apple Health weight sync can write confirmed weight entries.";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Save exported nutrition data files.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Import meal photos for AI-assisted food logging.";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.dushin.Log-The-Food-Dushin";
-				PRODUCT_NAME = LoggerApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dustinschaaf.LogTheFoodDushin;
+				PRODUCT_MODULE_NAME = LoggerApp;
+				PRODUCT_NAME = "Log The Food Dushin";
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -967,37 +965,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
-				CODE_SIGN_ENTITLEMENTS = LoggerApp/LoggerApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 286LKF859M;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Log_The_Food_Dushin;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Capture meals and scan barcodes for food logging.";
-				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "App Read and Write to health records";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "Optional Apple Health weight sync is available when you enable it.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Optional Apple Health weight sync can write confirmed weight entries.";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Save exported nutrition data files.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Import meal photos for AI-assisted food logging.";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.dushin.Log-The-Food-Dushin";
-				PRODUCT_NAME = LoggerApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dustinschaaf.LogTheFoodDushin;
+				PRODUCT_MODULE_NAME = LoggerApp;
+				PRODUCT_NAME = "Log The Food Dushin";
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

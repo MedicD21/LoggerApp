@@ -15,7 +15,7 @@ Privacy-first iOS nutrition tracker built with SwiftUI, SwiftData, async/await, 
 
 ```text
 LoggerApp/
-├── Log_The_Food_Dushin.xcodeproj
+├── LoggerApp.xcodeproj
 ├── LoggerApp/
 │   ├── App/
 │   ├── Core/
@@ -44,7 +44,7 @@ LoggerApp/
 
 1. Install `xcodegen` if it is not already available: `brew install xcodegen`
 2. Generate the project: `xcodegen generate`
-3. Open `Log_The_Food_Dushin.xcodeproj` in Xcode 26 or newer
+3. Open `LoggerApp.xcodeproj` in Xcode 26 or newer
 4. Run the `LoggerApp` scheme on an iOS 17+ simulator or device
 5. Add your Anthropic API key in Settings before using AI photo, text logging, or AI daily findings
 6. Optionally add your USDA FoodData Central API key in Settings for production throughput. The app falls back to `DEMO_KEY` for development.
@@ -58,8 +58,8 @@ LoggerApp/
 
 ## Verification
 
-- Build: `xcodebuild -scheme LoggerApp -project Log_The_Food_Dushin.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 16e' build`
-- Tests: `xcodebuild test -scheme LoggerApp -project Log_The_Food_Dushin.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 16e'`
+- Build: `xcodebuild -scheme LoggerApp -project LoggerApp.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 16e' build`
+- Tests: `xcodebuild test -scheme LoggerApp -project LoggerApp.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 16e'`
 
 ## Remaining TODO Checklist
 
